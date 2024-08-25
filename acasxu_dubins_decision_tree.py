@@ -28,6 +28,7 @@ from numba import njit
 from sklearn import tree
 from sklearn.tree import _tree
 from tqdm import tqdm
+import pickle
 
 def init_plot():
     'initialize plotting style'
@@ -793,11 +794,16 @@ if __name__ == "__main__":
     net = nets[0]
 
     # Training data
-    num_rhos = 30
+    '''num_rhos = 30
     num_thetas = 10
     num_psis = 10
     num_vOwns = 20
-    num_vInts = 20
+    num_vInts = 20'''
+    num_rhos = 3
+    num_thetas = 2
+    num_psis = 2
+    num_vOwns = 2
+    num_vInts = 2
 
     rho_range = np.linspace(0, 60760, num_rhos)
     theta_range = np.linspace(-np.pi, np.pi, num_thetas)
@@ -872,6 +878,7 @@ if __name__ == "__main__":
     ax.set_xlabel("effective alpha")
     ax.set_ylabel("total impurity of leaves")
     ax.set_title("Total Impurity vs effective alpha for training set")
+    plt.savefig('impurity.png')
     
     # Train many trees with different alpha values
     clfs = []
@@ -899,8 +906,15 @@ if __name__ == "__main__":
     ax.plot(ccp_alphas, train_scores, marker="o", label="train", drawstyle="steps-post")
     ax.plot(ccp_alphas, test_scores, marker="o", label="test", drawstyle="steps-post")
     ax.legend()
-    plt.show()
+    plt.savefig('accuracy.png')
+    #plt.show()
     
+    pickle.dump(ccp_alphas, open('alphas.pickle', 'wb'))
+    pickle.dump(train_scores, open('trainScores.pickle', 'wb'))
+    pickle.dump(test_scores, open('testScores.pickle', 'wb'))
+    pickle.dump(impurities, open('impurities.pickle', 'wb'))
+    
+    pickle.dump(clfs, open('trees.pickle', 'wb'))
 '''
     tree.plot_tree(clf)
 
