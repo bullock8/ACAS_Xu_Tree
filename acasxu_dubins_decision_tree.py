@@ -799,11 +799,11 @@ if __name__ == "__main__":
     num_psis = 10
     num_vOwns = 20
     num_vInts = 20'''
-    num_rhos = 3
-    num_thetas = 2
-    num_psis = 2
-    num_vOwns = 2
-    num_vInts = 2
+    num_rhos = 30
+    num_thetas = 30
+    num_psis = 30
+    num_vOwns = 30
+    num_vInts = 30
 
     rho_range = np.linspace(0, 60760, num_rhos)
     theta_range = np.linspace(-np.pi, np.pi, num_thetas)
