@@ -1,5 +1,6 @@
 import pickle
 import matplotlib.pyplot as plt
+import numpy as np
 
 ccp_alphas = pickle.load(open('alphas.pickle', 'rb'))
 train_scores = pickle.load(open('trainScores.pickle', 'rb'))

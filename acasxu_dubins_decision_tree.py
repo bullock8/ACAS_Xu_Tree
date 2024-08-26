@@ -799,20 +799,23 @@ if __name__ == "__main__":
     num_psis = 10
     num_vOwns = 20
     num_vInts = 20'''
-    num_rhos = 30
-    num_thetas = 30
-    num_psis = 30
-    num_vOwns = 30
-    num_vInts = 30
+    num_rhos = 5
+    num_thetas = 5
+    num_psis = 5
+    num_vOwns = 5
+    num_vInts = 5
+    
+    num_nets = 5 # Constant, only have 5 nets we can
 
     rho_range = np.linspace(0, 60760, num_rhos)
     theta_range = np.linspace(-np.pi, np.pi, num_thetas)
     psi_range = np.linspace(-np.pi, np.pi, num_psis)
     v_own_range = np.linspace(100, 1200, num_vOwns)
     v_int_range = np.linspace(0, 1200, num_vInts)
+    nets_range = np.arange(0, num_nets)
 
-    stored_states = np.zeros([num_rhos * num_thetas * num_psis * num_vOwns * num_vInts, 5])
-    command_nums = np.zeros([num_rhos * num_thetas * num_psis * num_vOwns * num_vInts])
+    stored_states = np.zeros([num_rhos * num_thetas * num_psis * num_vOwns * num_vInts * num_nets, 5])
+    command_nums = np.zeros([num_rhos * num_thetas * num_psis * num_vOwns * num_vInts * num_nets])
 
     index = 0
     for rho_ind in range(0, num_rhos):
