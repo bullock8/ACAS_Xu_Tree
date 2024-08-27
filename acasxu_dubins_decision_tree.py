@@ -800,13 +800,13 @@ if __name__ == "__main__":
     num_vOwns = 20
     num_vInts = 20
     '''
-    num_rhos = 5
-    num_thetas = 5
-    num_psis = 5
-    num_vOwns = 5
-    num_vInts = 5'''
+    num_rhos = 2
+    num_thetas = 2
+    num_psis = 2
+    num_vOwns = 2
+    num_vInts = 2'''
     
-    num_nets = 5 # Constant, only have 5 nets we can
+    num_nets = 1 # Constant, only have 5 nets we can
 
     rho_range = np.linspace(0, 60760, num_rhos)
     theta_range = np.linspace(-np.pi, np.pi, num_thetas)
@@ -832,14 +832,16 @@ if __name__ == "__main__":
                         v_int = v_int_range[v_int_ind]
 
                         state = [rho, theta, psi, v_own, v_int]
+                        stored_states[index, :] = state.copy()
+                        
                         res = run_network(net, state)
                         command = np.argmin(res)
 
-                        stored_states[index, :] = state
                         command_nums[index] = command
 
                         index += 1
-    
+    #print("Training states")
+    #print(stored_states)
     # Test data (randomly generated)
     test_pts = 10000
     test_states = np.random.rand(test_pts, 5)
@@ -850,15 +852,17 @@ if __name__ == "__main__":
         
         # rescale the test state
         test_state = np.multiply(test_state, np.array([60760, 2 * np.pi, 2 * np.pi, 1100, 1200])) + np.array([0, -np.pi, -np.pi, 100, 0])
+        test_states[i] = np.copy(test_state)
         
         test_res = run_network(net, test_state)
         test_cmd = np.argmin(test_res)
         
-        test_states[i] = test_state
+        
         test_cmds[i] = test_cmd
         
     #print(f'cmd nums: {command_nums.shape}')
-
+    print("Test states")
+    print(test_states)
     #print(command_nums)
 
 
@@ -888,7 +892,7 @@ if __name__ == "__main__":
     clfs = []
     print("Iterate alphas")
     for ccp_alpha in tqdm(ccp_alphas):
-        clf = tree.DecisionTreeClassifier(random_state=0, ccp_alpha=ccp_alpha)
+        clf = tree.DecisionTreeClassifier(random_state=0, ccp_alpha=ccp_alpha, class_weight='balanced')
         clf.fit(stored_states, command_nums)
         clfs.append(clf)
     print(
