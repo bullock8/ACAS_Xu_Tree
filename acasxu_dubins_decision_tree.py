@@ -794,16 +794,17 @@ if __name__ == "__main__":
     net = nets[0]
 
     # Training data
-    '''num_rhos = 30
+    num_rhos = 30
     num_thetas = 10
     num_psis = 10
     num_vOwns = 20
-    num_vInts = 20'''
+    num_vInts = 20
+    '''
     num_rhos = 5
     num_thetas = 5
     num_psis = 5
     num_vOwns = 5
-    num_vInts = 5
+    num_vInts = 5'''
     
     num_nets = 5 # Constant, only have 5 nets we can
 
@@ -917,7 +918,8 @@ if __name__ == "__main__":
     pickle.dump(test_scores, open('testScores.pickle', 'wb'))
     pickle.dump(impurities, open('impurities.pickle', 'wb'))
     
-    pickle.dump(clfs, open('trees.pickle', 'wb'))
+    # DON'T SAVE THE TREES, THIS FILE WILL BLOW UP
+    #pickle.dump(clfs, open('trees.pickle', 'wb'))
 '''
     tree.plot_tree(clf)
 
