@@ -39,7 +39,8 @@ net = nets[0]
 best_tree = pickle.load(open('best_tree.pickle', 'rb'))
 
 
-test_pts = 5
+test_pts = 10000
+np.random.seed(seed = 23)
 test_states = np.random.rand(test_pts, 5)
 tree_cmds = np.zeros([test_pts])
 net_cmds = np.zeros([test_pts])
@@ -57,7 +58,6 @@ for i in range(test_pts):
     test_state[0] = 60760/2
     test_state[1] = 0
     test_state[2] = 0
-    print(test_state)
     
     # Store the correctly scaled test state in the array
     test_states[i] = np.copy(test_state)
@@ -72,8 +72,6 @@ for i in range(test_pts):
 
     
 
-print("After loop")
-print(test_states)
 tree_cmds = best_tree.predict(test_states)
 
 
@@ -101,6 +99,8 @@ def get_cmap(cmds):
 
 
 
+test_score = best_tree.score(test_states, net_cmds)
+print(f"Testing score:  {test_score}\n")
 #get_cmap(net_cmds)
 from matplotlib.colors import ListedColormap
 
