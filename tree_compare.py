@@ -36,12 +36,10 @@ net = nets[0]
 #######
 # Load Trees
 #######
-trees = pickle.load(open('trees.pickle', 'rb'))
+best_tree = pickle.load(open('best_tree.pickle', 'rb'))
 
-best_index = 10
-best_tree = trees[10]
 
-test_pts = 1000
+test_pts = 5
 test_states = np.random.rand(test_pts, 5)
 tree_cmds = np.zeros([test_pts])
 net_cmds = np.zeros([test_pts])
@@ -51,6 +49,7 @@ for i in range(test_pts):
     test_state = test_states[i]
 
     test_state = np.multiply(test_state, np.array([60760, 2 * np.pi, 2 * np.pi, 1100, 1200])) + np.array([0, -np.pi, -np.pi, 100, 0])
+    
     # test_state = test_state.reshape(1, -1)
     #print(test_state.shape)
 
@@ -58,6 +57,10 @@ for i in range(test_pts):
     test_state[0] = 60760/2
     test_state[1] = 0
     test_state[2] = 0
+    print(test_state)
+    
+    # Store the correctly scaled test state in the array
+    test_states[i] = np.copy(test_state)
 
     # Save the ground-truth command from the neural net
     test_res = run_network(net, test_state)
@@ -67,10 +70,12 @@ for i in range(test_pts):
     #tree_cmd = best_tree.predict(test_state.reshape(1, -1))
     #tree_cmds[i] = tree_cmd.item()
 
-    # Store the correctly scaled test state in the array
-    test_states[i] = test_state
+    
 
+print("After loop")
+print(test_states)
 tree_cmds = best_tree.predict(test_states)
+
 
 def get_cmap(cmds):
     cmap_array = []
@@ -124,7 +129,11 @@ plt.legend()
 plt.figure(1)
 #cmap2, labels2 = get_cmap(tree_cmds) #cm.rainbow(tree_cmds / np.mean(tree_cmds))
 #plt.scatter(test_states[:, 3], test_states[:, 4], cmap = colors, c = tree_cmds)
-
+for i in range(0, len(values)):
+    ix = np.where(tree_cmds == i)
+    plt.scatter(test_states[ix, 3], test_states[ix, 4], c = colors[i], label = values[i]) 
+#plt.scatter(test_states[:, 3], test_states[:, 4], cmap = colors, c = net_cmds)
+plt.legend()
 
 
 plt.title("Decision Tree")
