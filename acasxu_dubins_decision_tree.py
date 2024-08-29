@@ -861,8 +861,8 @@ if __name__ == "__main__":
         test_cmds[i] = test_cmd
         
     #print(f'cmd nums: {command_nums.shape}')
-    print("Test states")
-    print(test_states)
+    #print("Test states")
+    #print(test_states)
     #print(command_nums)
 
 
