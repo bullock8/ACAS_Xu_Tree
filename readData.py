@@ -6,6 +6,7 @@ ccp_alphas = pickle.load(open('alphas.pickle', 'rb'))
 train_scores = pickle.load(open('trainScores.pickle', 'rb'))
 test_scores = pickle.load(open('testScores.pickle', 'rb'))
 impurities = pickle.load(open('impurities.pickle', 'rb'))
+num_nodes = pickle.load(open('num_nodes.pickle', 'rb'))
 
 # Plot impurity vs alpha value for the tree
 fig, ax = plt.subplots()
@@ -14,6 +15,14 @@ ax.set_xlabel("effective alpha")
 ax.set_ylabel("total impurity of leaves")
 ax.set_title("Total Impurity vs effective alpha for training set")
 
+# Plot number of nodes vs alpha value for the tree
+fig, ax = plt.subplots()
+ax.set_xlabel("alpha")
+ax.set_ylabel("num nodes")
+ax.set_title("Number of tree nodes vs alpha")
+ax.plot(ccp_alphas, num_nodes, marker='o', drawstyle='steps-post')
+
+# Accuracy vs alpha
 fig, ax = plt.subplots()
 ax.set_xlabel("alpha")
 ax.set_ylabel("accuracy")

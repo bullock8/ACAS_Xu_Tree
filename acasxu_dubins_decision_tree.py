@@ -886,14 +886,19 @@ if __name__ == "__main__":
     ax.set_xlabel("effective alpha")
     ax.set_ylabel("total impurity of leaves")
     ax.set_title("Total Impurity vs effective alpha for training set")
-    plt.savefig('impurity.png')
+    #plt.savefig('impurity.png')
     
     # Train many trees with different alpha values
     clfs = []
+    
+    #ccp_alphas = [0, 0.0004, 0.004, 0.04]
+    num_nodes = []
+    
     print("Iterate alphas")
     for ccp_alpha in tqdm(ccp_alphas):
         clf = tree.DecisionTreeClassifier(random_state=0, ccp_alpha=ccp_alpha, class_weight='balanced')
         clf.fit(stored_states, command_nums)
+        num_nodes.append(clf.tree_.node_count)
         clfs.append(clf)
     print(
         "Number of nodes in the last tree is: {} with ccp_alpha: {}".format(
@@ -906,6 +911,12 @@ if __name__ == "__main__":
     train_scores = [clf.score(stored_states, command_nums) for clf in tqdm(clfs)]
     print("Testing scores")
     test_scores = [clf.score(test_states, test_cmds) for clf in tqdm(clfs)]
+    
+    fig, ax = plt.subplots()
+    ax.set_xlabel("alpha")
+    ax.set_ylabel("num nodes")
+    ax.set_title("Number of tree nodes vs alpha")
+    ax.plot(ccp_alphas, num_nodes, marker='o', drawstyle='steps-post')
 
     fig, ax = plt.subplots()
     ax.set_xlabel("alpha")
@@ -914,13 +925,15 @@ if __name__ == "__main__":
     ax.plot(ccp_alphas, train_scores, marker="o", label="train", drawstyle="steps-post")
     ax.plot(ccp_alphas, test_scores, marker="o", label="test", drawstyle="steps-post")
     ax.legend()
-    plt.savefig('accuracy.png')
+    #plt.savefig('accuracy.png')
     #plt.show()
     
     pickle.dump(ccp_alphas, open('alphas.pickle', 'wb'))
     pickle.dump(train_scores, open('trainScores.pickle', 'wb'))
     pickle.dump(test_scores, open('testScores.pickle', 'wb'))
     pickle.dump(impurities, open('impurities.pickle', 'wb'))
+    pickle.dump(num_nodes, open('num_nodes.pickle', 'wb'))
+    #pickle.dump(clf, open('best_tree.pickle', 'wb'))
     
     # DON'T SAVE THE TREES, THIS FILE WILL BLOW UP
     #pickle.dump(clfs, open('trees.pickle', 'wb'))

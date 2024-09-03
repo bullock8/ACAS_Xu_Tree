@@ -848,7 +848,7 @@ if __name__ == "__main__":
     # Scale the te
     for i in range(0, 10):#test_states.shape[0]):
         test_state = test_states[i]
-        print(test_state)
+        #print(test_state)
         
         # rescale the test state
         test_state = np.multiply(test_state, np.array([60760, 2 * np.pi, 2 * np.pi, 1100, 1200])) + np.array([0, -np.pi, -np.pi, 100, 0])
@@ -918,8 +918,9 @@ if __name__ == "__main__":
     #pickle.dump(train_scores, open('trainScores.pickle', 'wb'))
     #pickle.dump(test_scores, open('testScores.pickle', 'wb'))
     #pickle.dump(impurities, open('impurities.pickle', 'wb'))
-    pickle.dump(clf, open('best_tree.pickle', 'wb'))
+    #pickle.dump(clf, open('best_tree.pickle', 'wb'))
     
+    clf = pickle.load(open('best_tree.pickle', 'rb'))
     # DON'T SAVE THE TREES, THIS FILE WILL BLOW UP
     #pickle.dump(clfs, open('trees.pickle', 'wb'))
 

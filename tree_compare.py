@@ -56,8 +56,8 @@ for i in range(test_pts):
 
     # Fix 3 of the states, so we can compare
     test_state[0] = 60760/2
-    test_state[1] = 0
-    test_state[2] = 0
+    test_state[1] = np.pi / 4
+    test_state[2] = -np.pi / 4
     
     # Store the correctly scaled test state in the array
     test_states[i] = np.copy(test_state)
