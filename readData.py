@@ -21,6 +21,7 @@ ax.set_xlabel("alpha")
 ax.set_ylabel("num nodes")
 ax.set_title("Number of tree nodes vs alpha")
 ax.plot(ccp_alphas, num_nodes, marker='o', drawstyle='steps-post')
+plt.yscale("log")
 
 # Accuracy vs alpha
 fig, ax = plt.subplots()
