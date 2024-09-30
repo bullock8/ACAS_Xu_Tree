@@ -765,7 +765,7 @@ def tree_to_code(tree, feature_names):
             print("{}if {} <= {}:".format(indent, name, np.round(threshold,2)))
             recurse(tree_.children_left[node], depth + 1)
             #print("{}else:  # if {} > {}".format(indent, name, np.round(threshold,2)))
-            print("{}if {} > {}".format(indent, name, np.round(threshold,2)))
+            print("{}if {} > {}:".format(indent, name, np.round(threshold,2)))
             recurse(tree_.children_right[node], depth + 1)
         else:
             print("{}return {}".format(indent, np.argmax(tree_.value[node])))
@@ -791,7 +791,7 @@ if __name__ == "__main__":
     for i in range(0, 5):
         net = nets[i]
     '''
-    net = nets[0]
+    net = nets[4]
 
     # Training data
     num_rhos = 30
@@ -841,12 +841,12 @@ if __name__ == "__main__":
                         index += 1
     
     # Test data (randomly generated)
-    test_pts = 10
+    test_pts = 1000
     np.random.seed(seed = 23)
     test_states = np.random.rand(test_pts, 5)
     test_cmds = np.zeros([test_pts])
     # Scale the te
-    for i in range(0, 10):#test_states.shape[0]):
+    for i in range(0, test_pts):#test_states.shape[0]):
         test_state = test_states[i]
         #print(test_state)
         
@@ -889,8 +889,8 @@ if __name__ == "__main__":
     # Train many trees with different alpha values
     # for ccp_alpha in tqdm(ccp_alphas):
     # ONLY TRAIN ONE TREE NOW
-    best_alpha = 0.0005
-    clf = tree.DecisionTreeClassifier(random_state=0, ccp_alpha=best_alpha)#, class_weight='balanced')
+    best_alpha = 0.00004
+    clf = tree.DecisionTreeClassifier(random_state=0, ccp_alpha=best_alpha, class_weight='balanced')
     clf.fit(stored_states, command_nums)
     print(
         "Number of nodes in the tree is: {} with ccp_alpha: {}".format(
@@ -920,12 +920,12 @@ if __name__ == "__main__":
     #pickle.dump(impurities, open('impurities.pickle', 'wb'))
     #pickle.dump(clf, open('best_tree.pickle', 'wb'))
     
-    clf = pickle.load(open('best_tree.pickle', 'rb'))
+    #clf = pickle.load(open('best_tree.pickle', 'rb'))
     # DON'T SAVE THE TREES, THIS FILE WILL BLOW UP
     #pickle.dump(clfs, open('trees.pickle', 'wb'))
 
-    tree.plot_tree(clf)
-    plt.show()
+    #tree.plot_tree(clf)
+    #plt.show()
 
 
 
