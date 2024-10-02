@@ -791,7 +791,7 @@ if __name__ == "__main__":
     for i in range(0, 5):
         net = nets[i]
     '''
-    net = nets[4]
+    net = nets[0]
 
     # Training data
     num_rhos = 30
@@ -806,7 +806,7 @@ if __name__ == "__main__":
     num_vOwns = 5
     num_vInts = 5'''
     
-    num_nets = 5 # Constant, only have 5 nets we can
+    num_nets = 1 # Constant, only have 5 nets we can
 
     rho_range = np.linspace(0, 60760, num_rhos)
     theta_range = np.linspace(-np.pi, np.pi, num_thetas)
@@ -814,31 +814,67 @@ if __name__ == "__main__":
     v_own_range = np.linspace(100, 1200, num_vOwns)
     v_int_range = np.linspace(0, 1200, num_vInts)
     nets_range = np.arange(0, num_nets)
+    
+    # Datapoints if I want to generate 2D slice plot, fixing 3 of the inputs
+    generate_figure = False
+    
+    if generate_figure:
+        num_rhos = 1
+        num_thetas = 1
+        num_psis = 1
+        num_vOwns = 1000
+        num_vInts = 1000
+        
+        rho_range = 60760/2 #np.linspace(0, 60760, num_rhos)
+        theta_range = 0 #np.linspace(-np.pi, np.pi, num_thetas)
+        psi_range = 0 #np.linspace(-np.pi, np.pi, num_psis)
+        v_own_range = np.linspace(100, 1200, num_vOwns)
+        v_int_range = np.linspace(0, 1200, num_vInts)
+        
+        #print(f"vown min: {np.min(v_own_range)}")
+        
+        
 
-    stored_states = np.zeros([num_rhos * num_thetas * num_psis * num_vOwns * num_vInts * num_nets, 5])
-    command_nums = np.zeros([num_rhos * num_thetas * num_psis * num_vOwns * num_vInts * num_nets])
+    stored_states = np.zeros([num_rhos * num_thetas * num_psis * num_vOwns * num_vInts, 5])
+    command_nums = np.zeros([num_rhos * num_thetas * num_psis * num_vOwns * num_vInts])
 
     index = 0
     for rho_ind in range(0, num_rhos):
+        #print(f'loop vOwn:  {np.min(v_own_range[0])}')
         for theta_ind in range(0, num_thetas):
             for psi_ind in range(0, num_psis):
                 for v_own_ind in range(0, num_vOwns):
                     for v_int_ind in range(0, num_vInts):
 
-                        rho = rho_range[rho_ind]
-                        theta = theta_range[theta_ind]
-                        psi = psi_range[psi_ind]
-                        v_own = v_own_range[v_own_ind]
-                        v_int = v_int_range[v_int_ind]
+                        if generate_figure:
+                            rho = rho_range
+                            theta = theta_range
+                            psi = psi_range
+                            v_own = v_own_range[v_own_ind]
+                            v_int = v_int_range[v_int_ind]
+                        else:
+                            rho = rho_range[rho_ind]
+                            theta = theta_range[theta_ind]
+                            psi = psi_range[psi_ind]
+                            v_own = v_own_range[v_own_ind]
+                            v_int = v_int_range[v_int_ind]
 
                         state = [rho, theta, psi, v_own, v_int]
+                        
+                        stored_states[index, :] = state.copy()
+                        
                         res = run_network(net, state)
                         command = np.argmin(res)
 
-                        stored_states[index, :] = state
+                        
                         command_nums[index] = command
 
                         index += 1
+                        
+    print(f'vOwn min:  {np.min(stored_states[:, 3])}')
+    print(f'vOwn max:  {np.max(stored_states[:, 3])}')
+    print(f'vInt min:  {np.min(stored_states[:, 4])}')
+    print(f'vInt max:  {np.max(stored_states[:, 4])}')
     
     # Test data (randomly generated)
     test_pts = 1000
@@ -853,14 +889,18 @@ if __name__ == "__main__":
         # rescale the test state
         test_state = np.multiply(test_state, np.array([60760, 2 * np.pi, 2 * np.pi, 1100, 1200])) + np.array([0, -np.pi, -np.pi, 100, 0])
         
+        test_states[i] = test_state.copy()
+        
         test_res = run_network(net, test_state)
         test_cmd = np.argmin(test_res)
         
-        test_states[i] = test_state
         test_cmds[i] = test_cmd
         
     #print(f'cmd nums: {command_nums.shape}')
-
+    print(f'vOwn test min:  {np.min(test_states[:, 3])}')
+    print(f'vOwn test max:  {np.max(test_states[:, 3])}')
+    print(f'vInt test min:  {np.min(test_states[:, 4])}')
+    print(f'vInt test max:  {np.max(test_states[:, 4])}')
     #print(command_nums)
 
 
@@ -914,11 +954,26 @@ if __name__ == "__main__":
     #plt.savefig('accuracy.png')
     #plt.show()
     
+    print(f"train x shape:  {stored_states.shape}")
+    print(f"train y shape:  {command_nums.shape}")
+    print(f"test x shape:  {test_states.shape}")
+    print(f"test y shape:  {test_cmds.shape}")
+    
+    if not generate_figure:
+        pickle.dump(stored_states, open('ACAS_train_x.pickle', 'wb'))
+        pickle.dump(command_nums, open('ACAS_train_y.pickle', 'wb'))
+        pickle.dump(test_states, open('ACAS_test_x.pickle', 'wb'))
+        pickle.dump(test_cmds, open('ACAS_test_y.pickle', 'wb'))
+    else:
+        pickle.dump(stored_states, open('ACAS_train_x_fig.pickle', 'wb'))
+        pickle.dump(command_nums, open('ACAS_train_y_fig.pickle', 'wb'))
+        pickle.dump(test_cmds, open('ACAS_train_y_tree.pickle', 'wb'))
+    
     #pickle.dump(ccp_alphas, open('alphas.pickle', 'wb'))
     #pickle.dump(train_scores, open('trainScores.pickle', 'wb'))
     #pickle.dump(test_scores, open('testScores.pickle', 'wb'))
     #pickle.dump(impurities, open('impurities.pickle', 'wb'))
-    #pickle.dump(clf, open('best_tree.pickle', 'wb'))
+    pickle.dump(clf, open('best_tree.pickle', 'wb'))
     
     #clf = pickle.load(open('best_tree.pickle', 'rb'))
     # DON'T SAVE THE TREES, THIS FILE WILL BLOW UP
@@ -934,7 +989,7 @@ if __name__ == "__main__":
 
     # with open("decision_tree.txt", "w") as fout:
     #     fout.write(text_representation)
-    tree_to_code(clf, ['rho', 'theta', 'psi', 'vOwn', 'vInt'])
+    #tree_to_code(clf, ['rho', 'theta', 'psi', 'vOwn', 'vInt'])
 
     #print(len(stored_states.tolist()))
     #print(len(stored_states[0].tolist()))

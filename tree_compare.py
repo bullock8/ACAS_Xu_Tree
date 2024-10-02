@@ -55,9 +55,9 @@ for i in range(test_pts):
     #print(test_state.shape)
 
     # Fix 3 of the states, so we can compare
-    test_state[0] = 60760/2
-    test_state[1] = np.pi / 4
-    test_state[2] = -np.pi / 4
+    #test_state[0] = 60760/2
+    test_state[1] = 0#np.pi / 4
+    test_state[2] = 0#-np.pi / 4
     
     # Store the correctly scaled test state in the array
     test_states[i] = np.copy(test_state)
@@ -142,11 +142,40 @@ plt.ylabel("v int")
 #plt.legend(*scatter.legend_elements())
 #plt.legend()
 
+fig = plt.figure(2)
+ax = fig.add_subplot(projection = '3d')
+
+for i in range(0, len(values)):
+    ix = np.where(net_cmds == i)
+    ax.scatter(test_states[ix, 3], test_states[ix, 4], test_states[ix,0], c = colors[i], label = values[i]) 
+#plt.scatter(test_states[:, 3], test_states[:, 4], cmap = colors, c = net_cmds)
+plt.legend()
+
+
+ax.set_title("Ground Truth")
+ax.set_xlabel("v own")
+ax.set_ylabel("v int")
+ax.set_zlabel("rho")
+
+
+fig = plt.figure(3)
+ax = fig.add_subplot(projection = '3d')
+
+for i in range(0, len(values)):
+    ix = np.where(tree_cmds == i)
+    ax.scatter(test_states[ix, 3], test_states[ix, 4], test_states[ix,0], c = colors[i], label = values[i]) 
+#plt.scatter(test_states[:, 3], test_states[:, 4], cmap = colors, c = net_cmds)
+plt.legend()
+
+
+ax.set_title("Decision Tree")
+ax.set_xlabel("v own")
+ax.set_ylabel("v int")
+ax.set_zlabel("rho")
+#plt.legend(*scatter.legend_elements())
+#plt.legend()
 
 plt.show()
-
-
-
 
 
 
