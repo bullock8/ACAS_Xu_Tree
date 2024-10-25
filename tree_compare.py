@@ -55,7 +55,7 @@ for i in range(test_pts):
     #print(test_state.shape)
 
     # Fix 3 of the states, so we can compare
-    #test_state[0] = 60760/2
+    test_state[0] = 1000
     test_state[1] = 0#np.pi / 4
     test_state[2] = 0#-np.pi / 4
     

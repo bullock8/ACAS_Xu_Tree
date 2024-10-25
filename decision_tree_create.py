@@ -768,7 +768,20 @@ def tree_to_code(tree, feature_names):
             print("{}if {} > {}:".format(indent, name, np.round(threshold,2)))
             recurse(tree_.children_right[node], depth + 1)
         else:
-            print("{}return {}".format(indent, np.argmax(tree_.value[node])))
+            next_cmd = np.argmax(tree_.value[node])
+            
+            if next_cmd==0:
+                mode_str = 'CraftMode.Coc'
+            if next_cmd==1:
+                mode_str = 'CraftMode.Weak_left'
+            if next_cmd==2:
+                mode_str = 'CraftMode.Weak_right'
+            if next_cmd==3:
+                mode_str = 'CraftMode.Strong_left'
+            if next_cmd==4:
+                mode_str = 'CraftMode.Strong_right'
+            
+            print("{}next.mode = {}".format(indent, mode_str))
 
     recurse(0, 1)
 
@@ -794,11 +807,11 @@ if __name__ == "__main__":
     net = nets[0]
 
     # Training data
-    num_rhos = 30
-    num_thetas = 10
-    num_psis = 10
+    num_rhos = 300
+    num_thetas = 100
+    num_psis = 1
     num_vOwns = 20
-    num_vInts = 20
+    num_vInts = 1
     '''
     num_rhos = 5
     num_thetas = 5
@@ -810,9 +823,9 @@ if __name__ == "__main__":
 
     rho_range = np.linspace(0, 60760, num_rhos)
     theta_range = np.linspace(-np.pi, np.pi, num_thetas)
-    psi_range = np.linspace(-np.pi, np.pi, num_psis)
+    psi_range = np.array([0])#np.linspace(-np.pi, np.pi, num_psis)
     v_own_range = np.linspace(100, 1200, num_vOwns)
-    v_int_range = np.linspace(0, 1200, num_vInts)
+    v_int_range = np.array([0])#np.linspace(0, 1200, num_vInts)
     nets_range = np.arange(0, num_nets)
     
     # Datapoints if I want to generate 2D slice plot, fixing 3 of the inputs
@@ -822,8 +835,8 @@ if __name__ == "__main__":
         num_rhos = 1
         num_thetas = 1
         num_psis = 1
-        num_vOwns = 1000
-        num_vInts = 1000
+        num_vOwns = 100
+        num_vInts = 100
         
         rho_range = 60760/2 #np.linspace(0, 60760, num_rhos)
         theta_range = 0 #np.linspace(-np.pi, np.pi, num_thetas)
@@ -887,7 +900,7 @@ if __name__ == "__main__":
         #print(test_state)
         
         # rescale the test state
-        test_state = np.multiply(test_state, np.array([60760, 2 * np.pi, 2 * np.pi, 1100, 1200])) + np.array([0, -np.pi, -np.pi, 100, 0])
+        test_state = np.multiply(test_state, np.array([60760, 2 * np.pi, 0 * np.pi, 1100, 0])) + np.array([0, -np.pi, 0, 100, 0])
         
         test_states[i] = test_state.copy()
         
@@ -954,20 +967,21 @@ if __name__ == "__main__":
     #plt.savefig('accuracy.png')
     #plt.show()
     
-    print(f"train x shape:  {stored_states.shape}")
-    print(f"train y shape:  {command_nums.shape}")
-    print(f"test x shape:  {test_states.shape}")
-    print(f"test y shape:  {test_cmds.shape}")
+    #print(f"train x shape:  {stored_states.shape}")
+    #print(f"train y shape:  {command_nums.shape}")
+    #print(f"test x shape:  {test_states.shape}")
+    #print(f"test y shape:  {test_cmds.shape}")
     
-    if not generate_figure:
-        pickle.dump(stored_states, open('ACAS_train_x.pickle', 'wb'))
-        pickle.dump(command_nums, open('ACAS_train_y.pickle', 'wb'))
-        pickle.dump(test_states, open('ACAS_test_x.pickle', 'wb'))
-        pickle.dump(test_cmds, open('ACAS_test_y.pickle', 'wb'))
-    else:
-        pickle.dump(stored_states, open('ACAS_train_x_fig.pickle', 'wb'))
-        pickle.dump(command_nums, open('ACAS_train_y_fig.pickle', 'wb'))
-        pickle.dump(test_cmds, open('ACAS_train_y_tree.pickle', 'wb'))
+    #if not generate_figure:
+        #pickle.dump(stored_states, open('ACAS_train_x.pickle', 'wb'))
+        #pickle.dump(command_nums, open('ACAS_train_y.pickle', 'wb'))
+        #pickle.dump(test_states, open('ACAS_test_x.pickle', 'wb'))
+        #pickle.dump(test_cmds, open('ACAS_test_y.pickle', 'wb'))
+        
+    #else:
+    #    pickle.dump(stored_states, open('ACAS_train_x_fig.pickle', 'wb'))
+    #    pickle.dump(command_nums, open('ACAS_train_y_fig.pickle', 'wb'))
+    #    pickle.dump(test_cmds, open('ACAS_train_y_tree.pickle', 'wb'))
     
     #pickle.dump(ccp_alphas, open('alphas.pickle', 'wb'))
     #pickle.dump(train_scores, open('trainScores.pickle', 'wb'))
@@ -989,7 +1003,7 @@ if __name__ == "__main__":
 
     # with open("decision_tree.txt", "w") as fout:
     #     fout.write(text_representation)
-    #tree_to_code(clf, ['rho', 'theta', 'psi', 'vOwn', 'vInt'])
+    tree_to_code(clf, ['rho', 'theta', 'psi', 'vOwn', 'vInt'])
 
     #print(len(stored_states.tolist()))
     #print(len(stored_states[0].tolist()))

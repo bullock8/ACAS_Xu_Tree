@@ -768,7 +768,7 @@ def tree_to_code(tree, feature_names):
             print("{}if {} > {}:".format(indent, name, np.round(threshold,2)))
             recurse(tree_.children_right[node], depth + 1)
         else:
-            print("{}return {}".format(indent, np.argmax(tree_.value[node])))
+            print("{}return {}".format(indent, tree_.value[node]))
 
     recurse(0, 1)
 
@@ -794,9 +794,9 @@ if __name__ == "__main__":
     net = nets[0]
 
     # Training data
-    num_rhos = 30
-    num_thetas = 10
-    num_psis = 10
+    num_rhos = 30*4
+    num_thetas = 5#10/2
+    num_psis = 5#10/2
     num_vOwns = 20
     num_vInts = 20
     '''
