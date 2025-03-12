@@ -748,14 +748,14 @@ def main():
     plot(s, save_mp4)
 
 # Decision tree stuff
-def tree_to_code(tree, feature_names):
+def tree_to_code(tree, feature_names, net_num):
     tree_ = tree.tree_
     feature_name = [
         feature_names[i] if i != _tree.TREE_UNDEFINED else "undefined!"
         for i in tree_.feature
     ]
-    feature_names = [f.replace(" ", "_")[:-5] for f in feature_names]
-    print("def predict({}):".format(", ".join(feature_names)))
+    #feature_names = [f.replace(" ", "_")[:-5] for f in feature_names]
+    print(f"def predict_{net_num}({", ".join(feature_names)}):")
 
     def recurse(node, depth):
         indent = "    " * depth
@@ -781,7 +781,8 @@ def tree_to_code(tree, feature_names):
             if next_cmd==4:
                 mode_str = 'CraftMode.Strong_right'
             
-            print("{}next.mode = {}".format(indent, mode_str))
+            print("{}next.agent_mode = {}".format(indent, mode_str))
+            print("{}next.timer = 0".format(indent))
 
     recurse(0, 1)
 
@@ -804,19 +805,14 @@ if __name__ == "__main__":
     for i in range(0, 5):
         net = nets[i]
     '''
-    net = nets[0]
+    net_num = 0
+    net = nets[net_num]
 
     # Training data
-    
-    dx = 300
-    dy = 300
-    
-    
-    
     num_rhos = 300
     num_thetas = 100
-    num_psis = 1
-    num_vOwns = 20
+    num_psis = 100
+    num_vOwns = 1
     num_vInts = 1
     '''
     num_rhos = 5
@@ -827,12 +823,12 @@ if __name__ == "__main__":
     
     num_nets = 1 # Constant, only have 5 nets we can
 
-    # rho_range = np.linspace(0, 60760, num_rhos)
-    # theta_range = np.linspace(-np.pi, np.pi, num_thetas)
-    # psi_range = np.array([0])#np.linspace(-np.pi, np.pi, num_psis)
-    # v_own_range = np.linspace(100, 1200, num_vOwns)
-    # v_int_range = np.array([0])#np.linspace(0, 1200, num_vInts)
-    # nets_range = np.arange(0, num_nets)
+    rho_range = np.linspace(0, 60760, num_rhos)
+    theta_range = np.linspace(-np.pi, np.pi, num_thetas)
+    psi_range = np.linspace(-np.pi, np.pi, num_psis)
+    v_own_range = np.array([100])#np.linspace(100, 1200, num_vOwns)
+    v_int_range = np.array([100])#np.linspace(0, 1200, num_vInts)
+    nets_range = np.arange(0, num_nets)
     
     # Datapoints if I want to generate 2D slice plot, fixing 3 of the inputs
     generate_figure = False
@@ -852,121 +848,74 @@ if __name__ == "__main__":
         
         #print(f"vown min: {np.min(v_own_range)}")
         
-    num_v_own = 30
-    num_v_int = 1
-    num_dx = 100
-    num_dy = 100
-    
-    dx_range = np.linspace(-1000, 1000, num_dx)
-    dy_range = np.linspace(-100, 100, num_dy)
-    v_own_x_range = np.linspace(-600, 600, num_v_own)
-    v_own_y_range = np.linspace(-600, 600, num_v_own)
-    v_int_x_range = np.array([0]) #np.linspace(0, 1200, num_v_int)
-    v_int_y_range = np.array([0]) #np.linspace(0, 1200, num_v_int)
+        
 
-    stored_states = np.zeros([num_dx * num_dy * num_v_own * num_v_own * num_v_int * num_v_int, 5])
-    tree_states = np.zeros([num_dx * num_dy * num_v_own * num_v_own * num_v_int * num_v_int, 5])
-    command_nums = np.zeros([num_dx * num_dy * num_v_own * num_v_own * num_v_int * num_v_int])
+    stored_states = np.zeros([num_rhos * num_thetas * num_psis * num_vOwns * num_vInts, 5])
+    command_nums = np.zeros([num_rhos * num_thetas * num_psis * num_vOwns * num_vInts])
 
     index = 0
-    
-    def bound_rad(angle):
-        while angle < -np.pi:
-            angle = angle + 2 * np.pi
-        while angle > np.pi:
-            angle = angle - 2 * np.pi
-        return angle
-    
-    ######
-    # Epsilon for tree state
-    ######
-    epsilon = 0.1
-    
-    for dx_ind in range(0, num_dx):
-        for dy_ind in range(0, num_dy):
-            for v_own_x_ind in range(0, num_v_own):
-                for v_own_y_ind in range(0, num_v_own):
-                    for v_int_x_ind in range(0, num_v_int):
-                        for v_int_y_ind in range(0, num_v_int):
-                            dx = dx_range[dx_ind]
-                            dy = dy_range[dy_ind]
-                            v_own_x = v_own_x_range[v_own_x_ind]
-                            v_own_y = v_own_y_range[v_own_y_ind]
-                            v_int_x = v_int_x_range[v_int_x_ind]
-                            v_int_y = v_int_y_range[v_int_y_ind]
-                            
-                            rho = np.sqrt(dx**2 + dy**2)
-                            theta = bound_rad(np.arctan2(dy, dx) - np.arctan2(v_own_y, v_own_x))
-                            psi = bound_rad(np.arctan2(v_int_y, v_int_x) - np.arctan2(v_own_y, v_own_x))
-                            v_own = np.sqrt(v_own_x**2 + v_own_y**2)
-                            v_int = np.sqrt(v_int_x**2 + v_int_y**2)
+    for rho_ind in range(0, num_rhos):
+        #print(f'loop vOwn:  {np.min(v_own_range[0])}')
+        for theta_ind in range(0, num_thetas):
+            for psi_ind in range(0, num_psis):
+                for v_own_ind in range(0, num_vOwns):
+                    for v_int_ind in range(0, num_vInts):
 
-                            state = [rho, theta, psi, v_own, v_int]
-                            
-                            tree_state = [rho**2, (dy / (dx + epsilon)) - (v_own_y / (v_own_x + epsilon)), (v_int_y / (v_int_x + epsilon)) - (v_own_y / (v_own_x + epsilon)) ,v_own, v_int]
-                            
-                            stored_states[index, :] = state.copy()
-                            tree_states[index, :] = tree_state.copy()      
-                                                  
-                            res = run_network(net, state)
-                            command = np.argmin(res)
+                        if generate_figure:
+                            rho = rho_range
+                            theta = theta_range
+                            psi = psi_range
+                            v_own = v_own_range[v_own_ind]
+                            v_int = v_int_range[v_int_ind]
+                        else:
+                            rho = rho_range[rho_ind]
+                            theta = theta_range[theta_ind]
+                            psi = psi_range[psi_ind]
+                            v_own = v_own_range[v_own_ind]
+                            v_int = v_int_range[v_int_ind]
 
-                            
-                            command_nums[index] = command
-
-                            index += 1
+                        state = [rho, theta, psi, v_own, v_int]
                         
-    print(f'vOwn min:  {np.min(stored_states[:, 3])}')
-    print(f'vOwn max:  {np.max(stored_states[:, 3])}')
-    print(f'vInt min:  {np.min(stored_states[:, 4])}')
-    print(f'vInt max:  {np.max(stored_states[:, 4])}')
+                        stored_states[index, :] = state.copy()
+                        
+                        res = run_network(net, state)
+                        command = np.argmin(res)
+
+                        
+                        command_nums[index] = command
+
+                        index += 1
+                        
+    print(f'# vOwn min:  {np.min(stored_states[:, 3])}')
+    print(f'# vOwn max:  {np.max(stored_states[:, 3])}')
+    print(f'# vInt min:  {np.min(stored_states[:, 4])}')
+    print(f'# vInt max:  {np.max(stored_states[:, 4])}')
     
     # Test data (randomly generated)
     test_pts = 1000
     np.random.seed(seed = 23)
-    rand_nums = np.random.rand(test_pts, 6)
     test_states = np.random.rand(test_pts, 5)
-    test_tree_states = np.zeros([test_pts, 5])
     test_cmds = np.zeros([test_pts])
     # Scale the te
     for i in range(0, test_pts):#test_states.shape[0]):
-        test_state = rand_nums[i]
+        test_state = test_states[i]
         #print(test_state)
         
         # rescale the test state
-        test_state = np.multiply(test_state, np.array([2000, 200, 1200, 1200, 0, 0])) + np.array([-1000,-100, -600, -600, 0, 0])
+        test_state = np.multiply(test_state, np.array([60760, 2 * np.pi, 0 * np.pi, 1100, 0])) + np.array([0, -np.pi, 0, 100, 0])
         
-        dx = test_state[0]
-        dy = test_state[1]
-        v_own_x = test_state[2]
-        v_own_y = test_state[3]
-        v_int_x = 0
-        v_int_y = 0
+        test_states[i] = test_state.copy()
         
-        rho = np.sqrt(dx**2 + dy**2)
-        theta = bound_rad(np.arctan2(dy, dx) - np.arctan2(v_own_y, v_own_x))
-        psi = bound_rad(np.arctan2(v_int_y, v_int_x) - np.arctan2(v_own_y, v_own_x))
-        v_own = np.sqrt(v_own_x**2 + v_own_y**2)
-        v_int = np.sqrt(v_int_x**2 + v_int_y**2)
-        
-        net_state = [rho, theta, psi, v_own, v_int]
-        tree_state = [rho**2, (dy / (dx + epsilon)) - (v_own_y / (v_own_x + epsilon)), (v_int_y / (v_int_x + epsilon)) - (v_own_y / (v_own_x + epsilon)) ,v_own, v_int]
-        
-        test_tree_states[i] = tree_state.copy()
-        test_states[i] = net_state.copy()
-        
-        
-        
-        test_res = run_network(net, net_state)
+        test_res = run_network(net, test_state)
         test_cmd = np.argmin(test_res)
         
         test_cmds[i] = test_cmd
         
     #print(f'cmd nums: {command_nums.shape}')
-    print(f'vOwn test min:  {np.min(test_states[:, 3])}')
-    print(f'vOwn test max:  {np.max(test_states[:, 3])}')
-    print(f'vInt test min:  {np.min(test_states[:, 4])}')
-    print(f'vInt test max:  {np.max(test_states[:, 4])}')
+    print(f'# vOwn test min:  {np.min(test_states[:, 3])}')
+    print(f'# vOwn test max:  {np.max(test_states[:, 3])}')
+    print(f'# vInt test min:  {np.min(test_states[:, 4])}')
+    print(f'# vInt test max:  {np.max(test_states[:, 4])}')
     #print(command_nums)
 
 
@@ -995,20 +944,20 @@ if __name__ == "__main__":
     # Train many trees with different alpha values
     # for ccp_alpha in tqdm(ccp_alphas):
     # ONLY TRAIN ONE TREE NOW
-    best_alpha = 0.4
+    best_alpha = 0.004/2
     clf = tree.DecisionTreeClassifier(random_state=0, ccp_alpha=best_alpha, class_weight='balanced')
-    clf.fit(tree_states, command_nums)
+    clf.fit(stored_states, command_nums)
     print(
-        "Number of nodes in the tree is: {} with ccp_alpha: {}".format(
+        "# Number of nodes in the tree is: {} with ccp_alpha: {}".format(
             clf.tree_.node_count, best_alpha
         )
     )
 
     # Compare training and testing accuracy of the pruned trees   
-    train_score = clf.score(tree_states, command_nums)
-    print(f"Training score:  {train_score}\n")
-    test_score = clf.score(test_tree_states, test_cmds)
-    print(f"Testing score:  {test_score}\n")
+    train_score = clf.score(stored_states, command_nums)
+    print(f"# Training score:  {train_score}\n")
+    test_score = clf.score(test_states, test_cmds)
+    print(f"# Testing score:  {test_score}\n")
 
     #fig, ax = plt.subplots()
     #ax.set_xlabel("alpha")
@@ -1040,7 +989,7 @@ if __name__ == "__main__":
     #pickle.dump(train_scores, open('trainScores.pickle', 'wb'))
     #pickle.dump(test_scores, open('testScores.pickle', 'wb'))
     #pickle.dump(impurities, open('impurities.pickle', 'wb'))
-    #pickle.dump(clf, open('best_tree.pickle', 'wb'))
+    pickle.dump(clf, open('best_tree.pickle', 'wb'))
     
     #clf = pickle.load(open('best_tree.pickle', 'rb'))
     # DON'T SAVE THE TREES, THIS FILE WILL BLOW UP
@@ -1056,7 +1005,7 @@ if __name__ == "__main__":
 
     # with open("decision_tree.txt", "w") as fout:
     #     fout.write(text_representation)
-    tree_to_code(clf, ['rho', 'theta', 'psi', 'vOwn', 'vInt'])
+    tree_to_code(clf, ['rho', 'theta', 'psi', 'vOwn', 'vInt'], net_num)
 
     #print(len(stored_states.tolist()))
     #print(len(stored_states[0].tolist()))

@@ -56,8 +56,8 @@ for i in range(test_pts):
 
     # Fix 3 of the states, so we can compare
     test_state[0] = 1000
-    test_state[1] = 0#np.pi / 4
-    test_state[2] = 0#-np.pi / 4
+    test_state[3] = 100#np.pi / 4
+    test_state[4] = 100#-np.pi / 4
     
     # Store the correctly scaled test state in the array
     test_states[i] = np.copy(test_state)
@@ -118,12 +118,16 @@ colors = ['r', 'y', 'g', 'b', 'm']
 
 for i in range(0, len(values)):
     ix = np.where(net_cmds == i)
-    plt.scatter(test_states[ix, 3], test_states[ix, 4], c = colors[i], label = values[i]) 
+    plt.scatter(test_states[ix, 1], test_states[ix, 2], c = colors[i], label = values[i]) 
 #plt.scatter(test_states[:, 3], test_states[:, 4], cmap = colors, c = net_cmds)
-plt.title("Ground Truth")
-plt.xlabel("v own")
-plt.ylabel("v int")
+plt.title("ACAS Xu NN")
+#ax.set_xlabel("v own")
+#ax.set_ylabel("v int")
+plt.xlabel(r"$\theta$ (rad)")
+plt.ylabel(r"$\psi$ (rad)")
 plt.legend()
+plt.savefig('ACAS_True.eps', format='eps')
+plt.savefig('ACAS_True.png', format='png')
 #plt.legend(['r', 'y', 'g', 'b', 'm'], ['CoC', 'WL', 'WR', 'SL', 'SR'])
 
 plt.figure(1)
@@ -131,31 +135,37 @@ plt.figure(1)
 #plt.scatter(test_states[:, 3], test_states[:, 4], cmap = colors, c = tree_cmds)
 for i in range(0, len(values)):
     ix = np.where(tree_cmds == i)
-    plt.scatter(test_states[ix, 3], test_states[ix, 4], c = colors[i], label = values[i]) 
+    plt.scatter(test_states[ix, 1], test_states[ix, 2], c = colors[i], label = values[i]) 
 #plt.scatter(test_states[:, 3], test_states[:, 4], cmap = colors, c = net_cmds)
 plt.legend()
 
 
-plt.title("Decision Tree")
-plt.xlabel("v own")
-plt.ylabel("v int")
+plt.title("ACAS Xu Decision Tree")
+#ax.set_xlabel("v own")
+#ax.set_ylabel("v int")
+plt.xlabel(r"$\theta$ (rad)")
+plt.ylabel(r"$\psi$ (rad)")
 #plt.legend(*scatter.legend_elements())
 #plt.legend()
+plt.savefig('ACAS_Tree.eps', format='eps')
+plt.savefig('ACAS_Tree.png', format='png')
 
 fig = plt.figure(2)
 ax = fig.add_subplot(projection = '3d')
 
 for i in range(0, len(values)):
     ix = np.where(net_cmds == i)
-    ax.scatter(test_states[ix, 3], test_states[ix, 4], test_states[ix,0], c = colors[i], label = values[i]) 
+    ax.scatter(test_states[ix, 1], test_states[ix, 2], test_states[ix,0], c = colors[i], label = values[i]) 
 #plt.scatter(test_states[:, 3], test_states[:, 4], cmap = colors, c = net_cmds)
 plt.legend()
 
 
-ax.set_title("Ground Truth")
-ax.set_xlabel("v own")
-ax.set_ylabel("v int")
-ax.set_zlabel("rho")
+ax.set_title("ACAS Xu NN")
+#ax.set_xlabel("v own")
+#ax.set_ylabel("v int")
+ax.set_xlabel(r"$\theta$")
+ax.set_ylabel(r"$\psi$")
+ax.set_zlabel(r"$\rho$")
 
 
 fig = plt.figure(3)
@@ -163,20 +173,43 @@ ax = fig.add_subplot(projection = '3d')
 
 for i in range(0, len(values)):
     ix = np.where(tree_cmds == i)
-    ax.scatter(test_states[ix, 3], test_states[ix, 4], test_states[ix,0], c = colors[i], label = values[i]) 
+    ax.scatter(test_states[ix, 1], test_states[ix, 2], test_states[ix,0], c = colors[i], label = values[i]) 
 #plt.scatter(test_states[:, 3], test_states[:, 4], cmap = colors, c = net_cmds)
 plt.legend()
 
 
-ax.set_title("Decision Tree")
-ax.set_xlabel("v own")
-ax.set_ylabel("v int")
-ax.set_zlabel("rho")
+ax.set_title("ACAS Xu Decision Tree")
+#ax.set_xlabel("v own")
+#ax.set_ylabel("v int")
+ax.set_xlabel(r"$\theta$")
+ax.set_ylabel(r"$\psi$")
+ax.set_zlabel(r"$\rho$")
 #plt.legend(*scatter.legend_elements())
 #plt.legend()
 
 plt.show()
 
+#### Distance metric
 
+# check through all test points
+min_rho_dist = np.zeros([test_pts])
+min_theta_dist = np.zeros([test_pts])
+min_phi_dist = np.zeros([test_pts])
+min_vown_dist = np.zeros([test_pts])
+min_vint_dist = np.zeros([test_pts])
+
+
+for i in range(test_pts):
+    if net_cmds[i] != tree_cmds[i]:
+        # find distance to nearest correctly-classified point
+        incorrect_class = tree_cmds[i]
+        ix = np.where(net_cmds == incorrect_class)
+        min_rho_dist[i] = np.min(np.abs( test_states[i, 0] - test_states[ix, 0] ))
+        min_theta_dist[i] = np.min(np.abs( test_states[i, 1] - test_states[ix, 1] ))
+        min_phi_dist[i] = np.min(np.abs( test_states[i, 2] - test_states[ix, 2] ))
+        min_vown_dist[i] = np.min(np.abs( test_states[i, 3] - test_states[ix, 3] ))
+        min_vint_dist[i] = np.min(np.abs( test_states[i, 4] - test_states[ix, 4] ))
+
+print(np.max(min_vint_dist))
 
 

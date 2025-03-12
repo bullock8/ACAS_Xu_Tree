@@ -782,6 +782,7 @@ def tree_to_code(tree, feature_names):
                 mode_str = 'CraftMode.Strong_right'
             
             print("{}next.mode = {}".format(indent, mode_str))
+            print("{}next.timer = 0".format(indent))
 
     recurse(0, 1)
 
@@ -942,7 +943,7 @@ if __name__ == "__main__":
     # Train many trees with different alpha values
     # for ccp_alpha in tqdm(ccp_alphas):
     # ONLY TRAIN ONE TREE NOW
-    best_alpha = 0.00004
+    best_alpha = 0.004
     clf = tree.DecisionTreeClassifier(random_state=0, ccp_alpha=best_alpha, class_weight='balanced')
     clf.fit(stored_states, command_nums)
     print(
