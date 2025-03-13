@@ -747,7 +747,15 @@ def main():
     print(f"\nSeed {interesting_seed} has min_dist {d}ft")
     plot(s, save_mp4)
 
-# Decision tree stuff
+######################################################################
+######################################################################
+############## START OF DECISION TREE STUFF ##########################
+######################################################################
+######################################################################
+
+# This function reads the tree object and prints out a block of 
+# Python "if" statements.  You can also pipe the output to its
+# own text file (what I did)
 def tree_to_code(tree, feature_names, net_num):
     tree_ = tree.tree_
     feature_name = [
@@ -786,12 +794,17 @@ def tree_to_code(tree, feature_names, net_num):
 
     recurse(0, 1)
 
-
 if __name__ == "__main__":
     #main()
     
+    # Load the networks
     nets = load_networks()
 
+
+    ############################
+    ###### Handy ACAS Info #####
+    ############################
+    
     # 0: rho, distance
     # 1: theta, angle to intruder relative to ownship heading
     # 2: psi, heading of intruder relative to ownship heading
@@ -805,14 +818,19 @@ if __name__ == "__main__":
     for i in range(0, 5):
         net = nets[i]
     '''
+    # Choose the specific network you want to use here
     net_num = 0
     net = nets[net_num]
+    
+    #############################################################
+    ############## Training Data Generation #####################
+    #############################################################    
 
-    # Training data
-    num_rhos = 300
-    num_thetas = 100
+    # Set number of samples for each variable's training data
+    num_rhos = 300    # create 300 evenly spaced rho samples, etc
+    num_thetas = 100 
     num_psis = 100
-    num_vOwns = 1
+    num_vOwns = 1  # JB: I hardcoded vOwn and vInt to 100 for some trees, so you can change these
     num_vInts = 1
     '''
     num_rhos = 5
@@ -820,131 +838,103 @@ if __name__ == "__main__":
     num_psis = 5
     num_vOwns = 5
     num_vInts = 5'''
-    
-    num_nets = 1 # Constant, only have 5 nets we can
 
+    # Generate your sample arrays for each ACAS state
     rho_range = np.linspace(0, 60760, num_rhos)
     theta_range = np.linspace(-np.pi, np.pi, num_thetas)
     psi_range = np.linspace(-np.pi, np.pi, num_psis)
     v_own_range = np.array([100])#np.linspace(100, 1200, num_vOwns)
-    v_int_range = np.array([100])#np.linspace(0, 1200, num_vInts)
-    nets_range = np.arange(0, num_nets)
-    
-    # Datapoints if I want to generate 2D slice plot, fixing 3 of the inputs
-    generate_figure = False
-    
-    if generate_figure:
-        num_rhos = 1
-        num_thetas = 1
-        num_psis = 1
-        num_vOwns = 100
-        num_vInts = 100
-        
-        rho_range = 60760/2 #np.linspace(0, 60760, num_rhos)
-        theta_range = 0 #np.linspace(-np.pi, np.pi, num_thetas)
-        psi_range = 0 #np.linspace(-np.pi, np.pi, num_psis)
-        v_own_range = np.linspace(100, 1200, num_vOwns)
-        v_int_range = np.linspace(0, 1200, num_vInts)
-        
-        #print(f"vown min: {np.min(v_own_range)}")
-        
+    v_int_range = np.array([100])#np.linspace(0, 1200, num_vInts)       
         
 
+    # stored_states will store all possible combinations of your sampled ACAS training states
     stored_states = np.zeros([num_rhos * num_thetas * num_psis * num_vOwns * num_vInts, 5])
+    
+    # command_nums stores the corresponding ACAS advisory {0,1,2,3,4} for each entry in stored_states
     command_nums = np.zeros([num_rhos * num_thetas * num_psis * num_vOwns * num_vInts])
 
+    # I didn't want to do too much math to keep track of which array index I'm at, so I just created an index variable and increment it for each loop
     index = 0
     for rho_ind in range(0, num_rhos):
-        #print(f'loop vOwn:  {np.min(v_own_range[0])}')
         for theta_ind in range(0, num_thetas):
             for psi_ind in range(0, num_psis):
                 for v_own_ind in range(0, num_vOwns):
                     for v_int_ind in range(0, num_vInts):
+                            
+                        rho = rho_range[rho_ind]
+                        theta = theta_range[theta_ind]
+                        psi = psi_range[psi_ind]
+                        v_own = v_own_range[v_own_ind]
+                        v_int = v_int_range[v_int_ind]
 
-                        if generate_figure:
-                            rho = rho_range
-                            theta = theta_range
-                            psi = psi_range
-                            v_own = v_own_range[v_own_ind]
-                            v_int = v_int_range[v_int_ind]
-                        else:
-                            rho = rho_range[rho_ind]
-                            theta = theta_range[theta_ind]
-                            psi = psi_range[psi_ind]
-                            v_own = v_own_range[v_own_ind]
-                            v_int = v_int_range[v_int_ind]
-
+                        # Relative state list for ACAS
                         state = [rho, theta, psi, v_own, v_int]
                         
+                        # I think you have to copy() here, otherwise you have issues with run_network() overwriting the stored 
+                        # states with the normalized stored states
                         stored_states[index, :] = state.copy()
                         
+                        # Run ACAS Xu and get the resulting turn command
                         res = run_network(net, state)
                         command = np.argmin(res)
 
-                        
+                        # Save the command and increment the index
                         command_nums[index] = command
 
                         index += 1
-                        
+    
+    # Quick check of some state variables for debugging purposes
     print(f'# vOwn min:  {np.min(stored_states[:, 3])}')
     print(f'# vOwn max:  {np.max(stored_states[:, 3])}')
     print(f'# vInt min:  {np.min(stored_states[:, 4])}')
     print(f'# vInt max:  {np.max(stored_states[:, 4])}')
     
-    # Test data (randomly generated)
+    #############################################################
+    ############## Testing Data Generation ######################
+    #############################################################   
+    
+    # Set number of test points to generate
     test_pts = 1000
+    # Set a seed for debugging purposes (I like 23)
     np.random.seed(seed = 23)
+    
+    # Generate uniform random numbers for test states
     test_states = np.random.rand(test_pts, 5)
     test_cmds = np.zeros([test_pts])
-    # Scale the te
-    for i in range(0, test_pts):#test_states.shape[0]):
+    
+    # Scale the test points to the appropriate range for each variable
+    for i in range(0, test_pts):
         test_state = test_states[i]
-        #print(test_state)
         
-        # rescale the test state
+        # rescale and shift the test state
         test_state = np.multiply(test_state, np.array([60760, 2 * np.pi, 0 * np.pi, 1100, 0])) + np.array([0, -np.pi, 0, 100, 0])
         
+        # Again, copy the test state so run_network() doesn't overwrite anything
         test_states[i] = test_state.copy()
         
+        # Calculate and safe the true ACAS command for each test states
         test_res = run_network(net, test_state)
         test_cmd = np.argmin(test_res)
         
         test_cmds[i] = test_cmd
         
-    #print(f'cmd nums: {command_nums.shape}')
+    # Print statements for debugging purposes
     print(f'# vOwn test min:  {np.min(test_states[:, 3])}')
     print(f'# vOwn test max:  {np.max(test_states[:, 3])}')
     print(f'# vInt test min:  {np.min(test_states[:, 4])}')
     print(f'# vInt test max:  {np.max(test_states[:, 4])}')
-    #print(command_nums)
-
-
-    #print(f'\n\nstates:  {stored_states.shape}')
-    #print(stored_states)
+    
+    #############################################################
+    ############## Create Decision Tree #########################
+    #############################################################  
+    
     clf = tree.DecisionTreeClassifier()
-    #clf.fit(stored_states, command_nums)
     
-    # Check out the alpha value thresholds for the tree
-    #path_tree = clf.cost_complexity_pruning_path(stored_states, command_nums)
-    #ccp_alphas, impurities = path_tree.ccp_alphas, path_tree.impurities
-    
-    
-    
-    #print(f'alphas:  {ccp_alphas}')
-    #print(f'impurities:  {impurities}')
-    
-    # Plot impurity vs alpha value for the tree
-    #fig, ax = plt.subplots()
-    #ax.plot(ccp_alphas[:-1], impurities[:-1], marker="o", drawstyle="steps-post")
-    #ax.set_xlabel("effective alpha")
-    #ax.set_ylabel("total impurity of leaves")
-    #ax.set_title("Total Impurity vs effective alpha for training set")
-    #plt.savefig('impurity.png')
-    
-    # Train many trees with different alpha values
-    # for ccp_alpha in tqdm(ccp_alphas):
-    # ONLY TRAIN ONE TREE NOW
+    # Set alpha parameter for minimum cost-complexity pruning
+    # https://scikit-learn.org/stable/modules/tree.html#minimal-cost-complexity-pruning
     best_alpha = 0.004/2
+    
+    # Create decision tree and fit to the training data
     clf = tree.DecisionTreeClassifier(random_state=0, ccp_alpha=best_alpha, class_weight='balanced')
     clf.fit(stored_states, command_nums)
     print(
@@ -959,58 +949,20 @@ if __name__ == "__main__":
     test_score = clf.score(test_states, test_cmds)
     print(f"# Testing score:  {test_score}\n")
 
-    #fig, ax = plt.subplots()
-    #ax.set_xlabel("alpha")
-    #ax.set_ylabel("accuracy")
-    #ax.set_title("Accuracy vs alpha for training and testing sets")
-    #ax.plot(ccp_alphas, train_scores, marker="o", label="train", drawstyle="steps-post")
-    #ax.plot(ccp_alphas, test_scores, marker="o", label="test", drawstyle="steps-post")
-    #ax.legend()
-    #plt.savefig('accuracy.png')
-    #plt.show()
-    
-    #print(f"train x shape:  {stored_states.shape}")
-    #print(f"train y shape:  {command_nums.shape}")
-    #print(f"test x shape:  {test_states.shape}")
-    #print(f"test y shape:  {test_cmds.shape}")
-    
-    #if not generate_figure:
-        #pickle.dump(stored_states, open('ACAS_train_x.pickle', 'wb'))
-        #pickle.dump(command_nums, open('ACAS_train_y.pickle', 'wb'))
-        #pickle.dump(test_states, open('ACAS_test_x.pickle', 'wb'))
-        #pickle.dump(test_cmds, open('ACAS_test_y.pickle', 'wb'))
-        
-    #else:
-    #    pickle.dump(stored_states, open('ACAS_train_x_fig.pickle', 'wb'))
-    #    pickle.dump(command_nums, open('ACAS_train_y_fig.pickle', 'wb'))
-    #    pickle.dump(test_cmds, open('ACAS_train_y_tree.pickle', 'wb'))
-    
-    #pickle.dump(ccp_alphas, open('alphas.pickle', 'wb'))
-    #pickle.dump(train_scores, open('trainScores.pickle', 'wb'))
-    #pickle.dump(test_scores, open('testScores.pickle', 'wb'))
-    #pickle.dump(impurities, open('impurities.pickle', 'wb'))
+    # Save the tree object if you want to keep it for further plotting
     pickle.dump(clf, open('best_tree.pickle', 'wb'))
-    
-    #clf = pickle.load(open('best_tree.pickle', 'rb'))
-    # DON'T SAVE THE TREES, THIS FILE WILL BLOW UP
-    #pickle.dump(clfs, open('trees.pickle', 'wb'))
-
-    #tree.plot_tree(clf)
-    #plt.show()
 
 
-
+    # This is nice if you want a text readout, but not formatted for Python "if" statements
     text_representation = tree.export_text(clf)
     #print(text_representation)
 
     # with open("decision_tree.txt", "w") as fout:
     #     fout.write(text_representation)
+    
+    # This prints out the decision tree represented by Python "if" statements
+    # Handy if you have a large tree
     tree_to_code(clf, ['rho', 'theta', 'psi', 'vOwn', 'vInt'], net_num)
-
-    #print(len(stored_states.tolist()))
-    #print(len(stored_states[0].tolist()))
-    #print(len(command_nums.tolist()))
-
 
 
     
