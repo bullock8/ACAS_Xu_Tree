@@ -12,6 +12,12 @@ pip3 install -r requirements.txt
 
 ## Convert ACAS Xu to Decision Tree
 
+To create the decision tree representation of the ACAS Xu neural networks, run the `decision_tree_create.py` script.
+
 ## Running DT ACAS
 
+TODO:  Need to implement example on the dubin's plane example
+
 ## Plotting Utilities
+
+TODO:  Keep tree_compare.  tree_animate probably should be archived

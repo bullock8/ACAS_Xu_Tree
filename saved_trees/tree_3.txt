@@ -1,0 +1,1969 @@
+def predict_3(rho, theta, psi, vOwn, vInt):
+    if vInt <= 66.67:
+        if rho <= 7333.1:
+            if theta <= 0.0:
+                next.agent_mode = CraftMode.Strong_left
+                next.timer = 0
+            if theta > 0.0:
+                if theta <= 0.7:
+                    next.agent_mode = CraftMode.Strong_right
+                    next.timer = 0
+                if theta > 0.7:
+                    if rho <= 1047.59:
+                        next.agent_mode = CraftMode.Strong_left
+                        next.timer = 0
+                    if rho > 1047.59:
+                        next.agent_mode = CraftMode.Weak_left
+                        next.timer = 0
+        if rho > 7333.1:
+            if rho <= 11523.45:
+                if vOwn <= 894.44:
+                    if theta <= 0.0:
+                        next.agent_mode = CraftMode.Strong_left
+                        next.timer = 0
+                    if theta > 0.0:
+                        next.agent_mode = CraftMode.Weak_right
+                        next.timer = 0
+                if vOwn > 894.44:
+                    next.agent_mode = CraftMode.Strong_right
+                    next.timer = 0
+            if rho > 11523.45:
+                if rho <= 15713.79:
+                    next.agent_mode = CraftMode.Coc
+                    next.timer = 0
+                if rho > 15713.79:
+                    next.agent_mode = CraftMode.Coc
+                    next.timer = 0
+    if vInt > 66.67:
+        if rho <= 17808.96:
+            if rho <= 3142.76:
+                if rho <= 1047.59:
+                    if psi <= 0.0:
+                        next.agent_mode = CraftMode.Strong_left
+                        next.timer = 0
+                    if psi > 0.0:
+                        if psi <= 0.7:
+                            next.agent_mode = CraftMode.Strong_right
+                            next.timer = 0
+                        if psi > 0.7:
+                            next.agent_mode = CraftMode.Strong_left
+                            next.timer = 0
+                if rho > 1047.59:
+                    if psi <= -0.7:
+                        next.agent_mode = CraftMode.Strong_left
+                        next.timer = 0
+                    if psi > -0.7:
+                        if psi <= 1.4:
+                            next.agent_mode = CraftMode.Strong_right
+                            next.timer = 0
+                        if psi > 1.4:
+                            next.agent_mode = CraftMode.Strong_left
+                            next.timer = 0
+            if rho > 3142.76:
+                if theta <= 0.7:
+                    if theta <= -0.7:
+                        if psi <= 0.0:
+                            if rho <= 5237.93:
+                                next.agent_mode = CraftMode.Weak_left
+                                next.timer = 0
+                            if rho > 5237.93:
+                                next.agent_mode = CraftMode.Coc
+                                next.timer = 0
+                        if psi > 0.0:
+                            next.agent_mode = CraftMode.Weak_left
+                            next.timer = 0
+                    if theta > -0.7:
+                        if theta <= 0.0:
+                            if psi <= 0.7:
+                                next.agent_mode = CraftMode.Strong_left
+                                next.timer = 0
+                            if psi > 0.7:
+                                if psi <= 2.79:
+                                    next.agent_mode = CraftMode.Strong_right
+                                    next.timer = 0
+                                if psi > 2.79:
+                                    next.agent_mode = CraftMode.Strong_left
+                                    next.timer = 0
+                        if theta > 0.0:
+                            if vInt <= 600.0:
+                                next.agent_mode = CraftMode.Strong_right
+                                next.timer = 0
+                            if vInt > 600.0:
+                                next.agent_mode = CraftMode.Strong_right
+                                next.timer = 0
+                if theta > 0.7:
+                    if rho <= 7333.1:
+                        if psi <= -2.09:
+                            next.agent_mode = CraftMode.Weak_left
+                            next.timer = 0
+                        if psi > -2.09:
+                            if psi <= 0.7:
+                                next.agent_mode = CraftMode.Strong_right
+                                next.timer = 0
+                            if psi > 0.7:
+                                next.agent_mode = CraftMode.Weak_left
+                                next.timer = 0
+                    if rho > 7333.1:
+                        if vInt <= 733.33:
+                            if rho <= 11523.45:
+                                if theta <= 2.09:
+                                    if psi <= -1.4:
+                                        next.agent_mode = CraftMode.Strong_right
+                                        next.timer = 0
+                                    if psi > -1.4:
+                                        next.agent_mode = CraftMode.Weak_right
+                                        next.timer = 0
+                                if theta > 2.09:
+                                    next.agent_mode = CraftMode.Coc
+                                    next.timer = 0
+                            if rho > 11523.45:
+                                next.agent_mode = CraftMode.Coc
+                                next.timer = 0
+                        if vInt > 733.33:
+                            if psi <= 0.0:
+                                next.agent_mode = CraftMode.Strong_right
+                                next.timer = 0
+                            if psi > 0.0:
+                                next.agent_mode = CraftMode.Coc
+                                next.timer = 0
+        if rho > 17808.96:
+            if theta <= -2.79:
+                next.agent_mode = CraftMode.Coc
+                next.timer = 0
+            if theta > -2.79:
+                if theta <= 2.79:
+                    if psi <= -2.79:
+                        next.agent_mode = CraftMode.Coc
+                        next.timer = 0
+                    if psi > -2.79:
+                        if psi <= 2.79:
+                            if rho <= 28284.83:
+                                next.agent_mode = CraftMode.Weak_left
+                                next.timer = 0
+                            if rho > 28284.83:
+                                if theta <= -1.4:
+                                    if psi <= 0.0:
+                                        next.agent_mode = CraftMode.Coc
+                                        next.timer = 0
+                                    if psi > 0.0:
+                                        if psi <= 1.4:
+                                            next.agent_mode = CraftMode.Weak_left
+                                            next.timer = 0
+                                        if psi > 1.4:
+                                            next.agent_mode = CraftMode.Coc
+                                            next.timer = 0
+                                if theta > -1.4:
+                                    if theta <= 0.7:
+                                        if vInt <= 733.33:
+                                            next.agent_mode = CraftMode.Weak_left
+                                            next.timer = 0
+                                        if vInt > 733.33:
+                                            next.agent_mode = CraftMode.Weak_left
+                                            next.timer = 0
+                                    if theta > 0.7:
+                                        if psi <= 0.0:
+                                            if psi <= -2.09:
+                                                next.agent_mode = CraftMode.Coc
+                                                next.timer = 0
+                                            if psi > -2.09:
+                                                next.agent_mode = CraftMode.Weak_left
+                                                next.timer = 0
+                                        if psi > 0.0:
+                                            next.agent_mode = CraftMode.Coc
+                                            next.timer = 0
+                        if psi > 2.79:
+                            next.agent_mode = CraftMode.Coc
+                            next.timer = 0
+                if theta > 2.79:
+                    next.agent_mode = CraftMode.Coc
+                    next.timer = 0
+def predict_3(rho, theta, psi, vOwn, vInt):
+    if vInt <= 66.67:
+        if rho <= 7333.1:
+            if theta <= 0.0:
+                next.agent_mode = CraftMode.Strong_left
+                next.timer = 0
+            if theta > 0.0:
+                if theta <= 0.7:
+                    next.agent_mode = CraftMode.Strong_right
+                    next.timer = 0
+                if theta > 0.7:
+                    if rho <= 1047.59:
+                        next.agent_mode = CraftMode.Strong_left
+                        next.timer = 0
+                    if rho > 1047.59:
+                        next.agent_mode = CraftMode.Weak_left
+                        next.timer = 0
+        if rho > 7333.1:
+            if rho <= 11523.45:
+                if vOwn <= 894.44:
+                    if theta <= 0.0:
+                        next.agent_mode = CraftMode.Strong_left
+                        next.timer = 0
+                    if theta > 0.0:
+                        next.agent_mode = CraftMode.Weak_right
+                        next.timer = 0
+                if vOwn > 894.44:
+                    next.agent_mode = CraftMode.Strong_right
+                    next.timer = 0
+            if rho > 11523.45:
+                if rho <= 15713.79:
+                    next.agent_mode = CraftMode.Coc
+                    next.timer = 0
+                if rho > 15713.79:
+                    next.agent_mode = CraftMode.Coc
+                    next.timer = 0
+    if vInt > 66.67:
+        if rho <= 17808.96:
+            if rho <= 3142.76:
+                if rho <= 1047.59:
+                    if psi <= 0.0:
+                        next.agent_mode = CraftMode.Strong_left
+                        next.timer = 0
+                    if psi > 0.0:
+                        if psi <= 0.7:
+                            next.agent_mode = CraftMode.Strong_right
+                            next.timer = 0
+                        if psi > 0.7:
+                            next.agent_mode = CraftMode.Strong_left
+                            next.timer = 0
+                if rho > 1047.59:
+                    if psi <= -0.7:
+                        next.agent_mode = CraftMode.Strong_left
+                        next.timer = 0
+                    if psi > -0.7:
+                        if psi <= 1.4:
+                            next.agent_mode = CraftMode.Strong_right
+                            next.timer = 0
+                        if psi > 1.4:
+                            next.agent_mode = CraftMode.Strong_left
+                            next.timer = 0
+            if rho > 3142.76:
+                if theta <= 0.7:
+                    if theta <= -0.7:
+                        if psi <= 0.0:
+                            if rho <= 5237.93:
+                                next.agent_mode = CraftMode.Weak_left
+                                next.timer = 0
+                            if rho > 5237.93:
+                                next.agent_mode = CraftMode.Coc
+                                next.timer = 0
+                        if psi > 0.0:
+                            next.agent_mode = CraftMode.Weak_left
+                            next.timer = 0
+                    if theta > -0.7:
+                        if theta <= 0.0:
+                            if psi <= 0.7:
+                                next.agent_mode = CraftMode.Strong_left
+                                next.timer = 0
+                            if psi > 0.7:
+                                if psi <= 2.79:
+                                    next.agent_mode = CraftMode.Strong_right
+                                    next.timer = 0
+                                if psi > 2.79:
+                                    next.agent_mode = CraftMode.Strong_left
+                                    next.timer = 0
+                        if theta > 0.0:
+                            if vInt <= 600.0:
+                                next.agent_mode = CraftMode.Strong_right
+                                next.timer = 0
+                            if vInt > 600.0:
+                                next.agent_mode = CraftMode.Strong_right
+                                next.timer = 0
+                if theta > 0.7:
+                    if rho <= 7333.1:
+                        if psi <= -2.09:
+                            next.agent_mode = CraftMode.Weak_left
+                            next.timer = 0
+                        if psi > -2.09:
+                            if psi <= 0.7:
+                                next.agent_mode = CraftMode.Strong_right
+                                next.timer = 0
+                            if psi > 0.7:
+                                next.agent_mode = CraftMode.Weak_left
+                                next.timer = 0
+                    if rho > 7333.1:
+                        if vInt <= 733.33:
+                            if rho <= 11523.45:
+                                if theta <= 2.09:
+                                    if psi <= -1.4:
+                                        next.agent_mode = CraftMode.Strong_right
+                                        next.timer = 0
+                                    if psi > -1.4:
+                                        next.agent_mode = CraftMode.Weak_right
+                                        next.timer = 0
+                                if theta > 2.09:
+                                    next.agent_mode = CraftMode.Coc
+                                    next.timer = 0
+                            if rho > 11523.45:
+                                next.agent_mode = CraftMode.Coc
+                                next.timer = 0
+                        if vInt > 733.33:
+                            if psi <= 0.0:
+                                next.agent_mode = CraftMode.Strong_right
+                                next.timer = 0
+                            if psi > 0.0:
+                                next.agent_mode = CraftMode.Coc
+                                next.timer = 0
+        if rho > 17808.96:
+            if theta <= -2.79:
+                next.agent_mode = CraftMode.Coc
+                next.timer = 0
+            if theta > -2.79:
+                if theta <= 2.79:
+                    if psi <= -2.79:
+                        next.agent_mode = CraftMode.Coc
+                        next.timer = 0
+                    if psi > -2.79:
+                        if psi <= 2.79:
+                            if rho <= 28284.83:
+                                next.agent_mode = CraftMode.Weak_left
+                                next.timer = 0
+                            if rho > 28284.83:
+                                if theta <= -1.4:
+                                    if psi <= 0.0:
+                                        next.agent_mode = CraftMode.Coc
+                                        next.timer = 0
+                                    if psi > 0.0:
+                                        if psi <= 1.4:
+                                            next.agent_mode = CraftMode.Weak_left
+                                            next.timer = 0
+                                        if psi > 1.4:
+                                            next.agent_mode = CraftMode.Coc
+                                            next.timer = 0
+                                if theta > -1.4:
+                                    if theta <= 0.7:
+                                        if vInt <= 733.33:
+                                            next.agent_mode = CraftMode.Weak_left
+                                            next.timer = 0
+                                        if vInt > 733.33:
+                                            next.agent_mode = CraftMode.Weak_left
+                                            next.timer = 0
+                                    if theta > 0.7:
+                                        if psi <= 0.0:
+                                            if psi <= -2.09:
+                                                next.agent_mode = CraftMode.Coc
+                                                next.timer = 0
+                                            if psi > -2.09:
+                                                next.agent_mode = CraftMode.Weak_left
+                                                next.timer = 0
+                                        if psi > 0.0:
+                                            next.agent_mode = CraftMode.Coc
+                                            next.timer = 0
+                        if psi > 2.79:
+                            next.agent_mode = CraftMode.Coc
+                            next.timer = 0
+                if theta > 2.79:
+                    next.agent_mode = CraftMode.Coc
+                    next.timer = 0
+def predict_3(rho, theta, psi, vOwn, vInt):
+    if vInt <= 66.67:
+        if rho <= 7333.1:
+            if theta <= 0.0:
+                next.agent_mode = CraftMode.Strong_left
+                next.timer = 0
+            if theta > 0.0:
+                if theta <= 0.7:
+                    next.agent_mode = CraftMode.Strong_right
+                    next.timer = 0
+                if theta > 0.7:
+                    if rho <= 1047.59:
+                        next.agent_mode = CraftMode.Strong_left
+                        next.timer = 0
+                    if rho > 1047.59:
+                        next.agent_mode = CraftMode.Weak_left
+                        next.timer = 0
+        if rho > 7333.1:
+            if rho <= 11523.45:
+                if vOwn <= 894.44:
+                    if theta <= 0.0:
+                        next.agent_mode = CraftMode.Strong_left
+                        next.timer = 0
+                    if theta > 0.0:
+                        next.agent_mode = CraftMode.Weak_right
+                        next.timer = 0
+                if vOwn > 894.44:
+                    next.agent_mode = CraftMode.Strong_right
+                    next.timer = 0
+            if rho > 11523.45:
+                if rho <= 15713.79:
+                    next.agent_mode = CraftMode.Coc
+                    next.timer = 0
+                if rho > 15713.79:
+                    next.agent_mode = CraftMode.Coc
+                    next.timer = 0
+    if vInt > 66.67:
+        if rho <= 17808.96:
+            if rho <= 3142.76:
+                if rho <= 1047.59:
+                    if psi <= 0.0:
+                        next.agent_mode = CraftMode.Strong_left
+                        next.timer = 0
+                    if psi > 0.0:
+                        if psi <= 0.7:
+                            next.agent_mode = CraftMode.Strong_right
+                            next.timer = 0
+                        if psi > 0.7:
+                            next.agent_mode = CraftMode.Strong_left
+                            next.timer = 0
+                if rho > 1047.59:
+                    if psi <= -0.7:
+                        next.agent_mode = CraftMode.Strong_left
+                        next.timer = 0
+                    if psi > -0.7:
+                        if psi <= 1.4:
+                            next.agent_mode = CraftMode.Strong_right
+                            next.timer = 0
+                        if psi > 1.4:
+                            next.agent_mode = CraftMode.Strong_left
+                            next.timer = 0
+            if rho > 3142.76:
+                if theta <= 0.7:
+                    if theta <= -0.7:
+                        if psi <= 0.0:
+                            if rho <= 5237.93:
+                                next.agent_mode = CraftMode.Weak_left
+                                next.timer = 0
+                            if rho > 5237.93:
+                                next.agent_mode = CraftMode.Coc
+                                next.timer = 0
+                        if psi > 0.0:
+                            next.agent_mode = CraftMode.Weak_left
+                            next.timer = 0
+                    if theta > -0.7:
+                        if theta <= 0.0:
+                            if psi <= 0.7:
+                                next.agent_mode = CraftMode.Strong_left
+                                next.timer = 0
+                            if psi > 0.7:
+                                if psi <= 2.79:
+                                    next.agent_mode = CraftMode.Strong_right
+                                    next.timer = 0
+                                if psi > 2.79:
+                                    next.agent_mode = CraftMode.Strong_left
+                                    next.timer = 0
+                        if theta > 0.0:
+                            if vInt <= 600.0:
+                                next.agent_mode = CraftMode.Strong_right
+                                next.timer = 0
+                            if vInt > 600.0:
+                                next.agent_mode = CraftMode.Strong_right
+                                next.timer = 0
+                if theta > 0.7:
+                    if rho <= 7333.1:
+                        if psi <= -2.09:
+                            next.agent_mode = CraftMode.Weak_left
+                            next.timer = 0
+                        if psi > -2.09:
+                            if psi <= 0.7:
+                                next.agent_mode = CraftMode.Strong_right
+                                next.timer = 0
+                            if psi > 0.7:
+                                next.agent_mode = CraftMode.Weak_left
+                                next.timer = 0
+                    if rho > 7333.1:
+                        if vInt <= 733.33:
+                            if rho <= 11523.45:
+                                if theta <= 2.09:
+                                    if psi <= -1.4:
+                                        next.agent_mode = CraftMode.Strong_right
+                                        next.timer = 0
+                                    if psi > -1.4:
+                                        next.agent_mode = CraftMode.Weak_right
+                                        next.timer = 0
+                                if theta > 2.09:
+                                    next.agent_mode = CraftMode.Coc
+                                    next.timer = 0
+                            if rho > 11523.45:
+                                next.agent_mode = CraftMode.Coc
+                                next.timer = 0
+                        if vInt > 733.33:
+                            if psi <= 0.0:
+                                next.agent_mode = CraftMode.Strong_right
+                                next.timer = 0
+                            if psi > 0.0:
+                                next.agent_mode = CraftMode.Coc
+                                next.timer = 0
+        if rho > 17808.96:
+            if theta <= -2.79:
+                next.agent_mode = CraftMode.Coc
+                next.timer = 0
+            if theta > -2.79:
+                if theta <= 2.79:
+                    if psi <= -2.79:
+                        next.agent_mode = CraftMode.Coc
+                        next.timer = 0
+                    if psi > -2.79:
+                        if psi <= 2.79:
+                            if rho <= 28284.83:
+                                next.agent_mode = CraftMode.Weak_left
+                                next.timer = 0
+                            if rho > 28284.83:
+                                if theta <= -1.4:
+                                    if psi <= 0.0:
+                                        next.agent_mode = CraftMode.Coc
+                                        next.timer = 0
+                                    if psi > 0.0:
+                                        if psi <= 1.4:
+                                            next.agent_mode = CraftMode.Weak_left
+                                            next.timer = 0
+                                        if psi > 1.4:
+                                            next.agent_mode = CraftMode.Coc
+                                            next.timer = 0
+                                if theta > -1.4:
+                                    if theta <= 0.7:
+                                        if vInt <= 733.33:
+                                            next.agent_mode = CraftMode.Weak_left
+                                            next.timer = 0
+                                        if vInt > 733.33:
+                                            next.agent_mode = CraftMode.Weak_left
+                                            next.timer = 0
+                                    if theta > 0.7:
+                                        if psi <= 0.0:
+                                            if psi <= -2.09:
+                                                next.agent_mode = CraftMode.Coc
+                                                next.timer = 0
+                                            if psi > -2.09:
+                                                next.agent_mode = CraftMode.Weak_left
+                                                next.timer = 0
+                                        if psi > 0.0:
+                                            next.agent_mode = CraftMode.Coc
+                                            next.timer = 0
+                        if psi > 2.79:
+                            next.agent_mode = CraftMode.Coc
+                            next.timer = 0
+                if theta > 2.79:
+                    next.agent_mode = CraftMode.Coc
+                    next.timer = 0
+def predict_3(rho, theta, psi, vOwn, vInt):
+    if vInt <= 66.67:
+        if rho <= 7333.1:
+            if theta <= 0.0:
+                next.agent_mode = CraftMode.Strong_left
+                next.timer = 0
+            if theta > 0.0:
+                if theta <= 0.7:
+                    next.agent_mode = CraftMode.Strong_right
+                    next.timer = 0
+                if theta > 0.7:
+                    if rho <= 1047.59:
+                        next.agent_mode = CraftMode.Strong_left
+                        next.timer = 0
+                    if rho > 1047.59:
+                        next.agent_mode = CraftMode.Weak_left
+                        next.timer = 0
+        if rho > 7333.1:
+            if rho <= 11523.45:
+                if vOwn <= 894.44:
+                    if theta <= 0.0:
+                        next.agent_mode = CraftMode.Strong_left
+                        next.timer = 0
+                    if theta > 0.0:
+                        next.agent_mode = CraftMode.Weak_right
+                        next.timer = 0
+                if vOwn > 894.44:
+                    next.agent_mode = CraftMode.Strong_right
+                    next.timer = 0
+            if rho > 11523.45:
+                if rho <= 15713.79:
+                    next.agent_mode = CraftMode.Coc
+                    next.timer = 0
+                if rho > 15713.79:
+                    next.agent_mode = CraftMode.Coc
+                    next.timer = 0
+    if vInt > 66.67:
+        if rho <= 17808.96:
+            if rho <= 3142.76:
+                if rho <= 1047.59:
+                    if psi <= 0.0:
+                        next.agent_mode = CraftMode.Strong_left
+                        next.timer = 0
+                    if psi > 0.0:
+                        if psi <= 0.7:
+                            next.agent_mode = CraftMode.Strong_right
+                            next.timer = 0
+                        if psi > 0.7:
+                            next.agent_mode = CraftMode.Strong_left
+                            next.timer = 0
+                if rho > 1047.59:
+                    if psi <= -0.7:
+                        next.agent_mode = CraftMode.Strong_left
+                        next.timer = 0
+                    if psi > -0.7:
+                        if psi <= 1.4:
+                            next.agent_mode = CraftMode.Strong_right
+                            next.timer = 0
+                        if psi > 1.4:
+                            next.agent_mode = CraftMode.Strong_left
+                            next.timer = 0
+            if rho > 3142.76:
+                if theta <= 0.7:
+                    if theta <= -0.7:
+                        if psi <= 0.0:
+                            if rho <= 5237.93:
+                                next.agent_mode = CraftMode.Weak_left
+                                next.timer = 0
+                            if rho > 5237.93:
+                                next.agent_mode = CraftMode.Coc
+                                next.timer = 0
+                        if psi > 0.0:
+                            next.agent_mode = CraftMode.Weak_left
+                            next.timer = 0
+                    if theta > -0.7:
+                        if theta <= 0.0:
+                            if psi <= 0.7:
+                                next.agent_mode = CraftMode.Strong_left
+                                next.timer = 0
+                            if psi > 0.7:
+                                if psi <= 2.79:
+                                    next.agent_mode = CraftMode.Strong_right
+                                    next.timer = 0
+                                if psi > 2.79:
+                                    next.agent_mode = CraftMode.Strong_left
+                                    next.timer = 0
+                        if theta > 0.0:
+                            if vInt <= 600.0:
+                                next.agent_mode = CraftMode.Strong_right
+                                next.timer = 0
+                            if vInt > 600.0:
+                                next.agent_mode = CraftMode.Strong_right
+                                next.timer = 0
+                if theta > 0.7:
+                    if rho <= 7333.1:
+                        if psi <= -2.09:
+                            next.agent_mode = CraftMode.Weak_left
+                            next.timer = 0
+                        if psi > -2.09:
+                            if psi <= 0.7:
+                                next.agent_mode = CraftMode.Strong_right
+                                next.timer = 0
+                            if psi > 0.7:
+                                next.agent_mode = CraftMode.Weak_left
+                                next.timer = 0
+                    if rho > 7333.1:
+                        if vInt <= 733.33:
+                            if rho <= 11523.45:
+                                if theta <= 2.09:
+                                    if psi <= -1.4:
+                                        next.agent_mode = CraftMode.Strong_right
+                                        next.timer = 0
+                                    if psi > -1.4:
+                                        next.agent_mode = CraftMode.Weak_right
+                                        next.timer = 0
+                                if theta > 2.09:
+                                    next.agent_mode = CraftMode.Coc
+                                    next.timer = 0
+                            if rho > 11523.45:
+                                next.agent_mode = CraftMode.Coc
+                                next.timer = 0
+                        if vInt > 733.33:
+                            if psi <= 0.0:
+                                next.agent_mode = CraftMode.Strong_right
+                                next.timer = 0
+                            if psi > 0.0:
+                                next.agent_mode = CraftMode.Coc
+                                next.timer = 0
+        if rho > 17808.96:
+            if theta <= -2.79:
+                next.agent_mode = CraftMode.Coc
+                next.timer = 0
+            if theta > -2.79:
+                if theta <= 2.79:
+                    if psi <= -2.79:
+                        next.agent_mode = CraftMode.Coc
+                        next.timer = 0
+                    if psi > -2.79:
+                        if psi <= 2.79:
+                            if rho <= 28284.83:
+                                next.agent_mode = CraftMode.Weak_left
+                                next.timer = 0
+                            if rho > 28284.83:
+                                if theta <= -1.4:
+                                    if psi <= 0.0:
+                                        next.agent_mode = CraftMode.Coc
+                                        next.timer = 0
+                                    if psi > 0.0:
+                                        if psi <= 1.4:
+                                            next.agent_mode = CraftMode.Weak_left
+                                            next.timer = 0
+                                        if psi > 1.4:
+                                            next.agent_mode = CraftMode.Coc
+                                            next.timer = 0
+                                if theta > -1.4:
+                                    if theta <= 0.7:
+                                        if vInt <= 733.33:
+                                            next.agent_mode = CraftMode.Weak_left
+                                            next.timer = 0
+                                        if vInt > 733.33:
+                                            next.agent_mode = CraftMode.Weak_left
+                                            next.timer = 0
+                                    if theta > 0.7:
+                                        if psi <= 0.0:
+                                            if psi <= -2.09:
+                                                next.agent_mode = CraftMode.Coc
+                                                next.timer = 0
+                                            if psi > -2.09:
+                                                next.agent_mode = CraftMode.Weak_left
+                                                next.timer = 0
+                                        if psi > 0.0:
+                                            next.agent_mode = CraftMode.Coc
+                                            next.timer = 0
+                        if psi > 2.79:
+                            next.agent_mode = CraftMode.Coc
+                            next.timer = 0
+                if theta > 2.79:
+                    next.agent_mode = CraftMode.Coc
+                    next.timer = 0
+def predict_3(rho, theta, psi, vOwn, vInt):
+    if vInt <= 66.67:
+        if rho <= 7333.1:
+            if theta <= 0.0:
+                next.agent_mode = CraftMode.Strong_left
+                next.timer = 0
+            if theta > 0.0:
+                if theta <= 0.7:
+                    next.agent_mode = CraftMode.Strong_right
+                    next.timer = 0
+                if theta > 0.7:
+                    if rho <= 1047.59:
+                        next.agent_mode = CraftMode.Strong_left
+                        next.timer = 0
+                    if rho > 1047.59:
+                        next.agent_mode = CraftMode.Weak_left
+                        next.timer = 0
+        if rho > 7333.1:
+            if rho <= 11523.45:
+                if vOwn <= 894.44:
+                    if theta <= 0.0:
+                        next.agent_mode = CraftMode.Strong_left
+                        next.timer = 0
+                    if theta > 0.0:
+                        next.agent_mode = CraftMode.Weak_right
+                        next.timer = 0
+                if vOwn > 894.44:
+                    next.agent_mode = CraftMode.Strong_right
+                    next.timer = 0
+            if rho > 11523.45:
+                if rho <= 15713.79:
+                    next.agent_mode = CraftMode.Coc
+                    next.timer = 0
+                if rho > 15713.79:
+                    next.agent_mode = CraftMode.Coc
+                    next.timer = 0
+    if vInt > 66.67:
+        if rho <= 17808.96:
+            if rho <= 3142.76:
+                if rho <= 1047.59:
+                    if psi <= 0.0:
+                        next.agent_mode = CraftMode.Strong_left
+                        next.timer = 0
+                    if psi > 0.0:
+                        if psi <= 0.7:
+                            next.agent_mode = CraftMode.Strong_right
+                            next.timer = 0
+                        if psi > 0.7:
+                            next.agent_mode = CraftMode.Strong_left
+                            next.timer = 0
+                if rho > 1047.59:
+                    if psi <= -0.7:
+                        next.agent_mode = CraftMode.Strong_left
+                        next.timer = 0
+                    if psi > -0.7:
+                        if psi <= 1.4:
+                            next.agent_mode = CraftMode.Strong_right
+                            next.timer = 0
+                        if psi > 1.4:
+                            next.agent_mode = CraftMode.Strong_left
+                            next.timer = 0
+            if rho > 3142.76:
+                if theta <= 0.7:
+                    if theta <= -0.7:
+                        if psi <= 0.0:
+                            if rho <= 5237.93:
+                                next.agent_mode = CraftMode.Weak_left
+                                next.timer = 0
+                            if rho > 5237.93:
+                                next.agent_mode = CraftMode.Coc
+                                next.timer = 0
+                        if psi > 0.0:
+                            next.agent_mode = CraftMode.Weak_left
+                            next.timer = 0
+                    if theta > -0.7:
+                        if theta <= 0.0:
+                            if psi <= 0.7:
+                                next.agent_mode = CraftMode.Strong_left
+                                next.timer = 0
+                            if psi > 0.7:
+                                if psi <= 2.79:
+                                    next.agent_mode = CraftMode.Strong_right
+                                    next.timer = 0
+                                if psi > 2.79:
+                                    next.agent_mode = CraftMode.Strong_left
+                                    next.timer = 0
+                        if theta > 0.0:
+                            if vInt <= 600.0:
+                                next.agent_mode = CraftMode.Strong_right
+                                next.timer = 0
+                            if vInt > 600.0:
+                                next.agent_mode = CraftMode.Strong_right
+                                next.timer = 0
+                if theta > 0.7:
+                    if rho <= 7333.1:
+                        if psi <= -2.09:
+                            next.agent_mode = CraftMode.Weak_left
+                            next.timer = 0
+                        if psi > -2.09:
+                            if psi <= 0.7:
+                                next.agent_mode = CraftMode.Strong_right
+                                next.timer = 0
+                            if psi > 0.7:
+                                next.agent_mode = CraftMode.Weak_left
+                                next.timer = 0
+                    if rho > 7333.1:
+                        if vInt <= 733.33:
+                            if rho <= 11523.45:
+                                if theta <= 2.09:
+                                    if psi <= -1.4:
+                                        next.agent_mode = CraftMode.Strong_right
+                                        next.timer = 0
+                                    if psi > -1.4:
+                                        next.agent_mode = CraftMode.Weak_right
+                                        next.timer = 0
+                                if theta > 2.09:
+                                    next.agent_mode = CraftMode.Coc
+                                    next.timer = 0
+                            if rho > 11523.45:
+                                next.agent_mode = CraftMode.Coc
+                                next.timer = 0
+                        if vInt > 733.33:
+                            if psi <= 0.0:
+                                next.agent_mode = CraftMode.Strong_right
+                                next.timer = 0
+                            if psi > 0.0:
+                                next.agent_mode = CraftMode.Coc
+                                next.timer = 0
+        if rho > 17808.96:
+            if theta <= -2.79:
+                next.agent_mode = CraftMode.Coc
+                next.timer = 0
+            if theta > -2.79:
+                if theta <= 2.79:
+                    if psi <= -2.79:
+                        next.agent_mode = CraftMode.Coc
+                        next.timer = 0
+                    if psi > -2.79:
+                        if psi <= 2.79:
+                            if rho <= 28284.83:
+                                next.agent_mode = CraftMode.Weak_left
+                                next.timer = 0
+                            if rho > 28284.83:
+                                if theta <= -1.4:
+                                    if psi <= 0.0:
+                                        next.agent_mode = CraftMode.Coc
+                                        next.timer = 0
+                                    if psi > 0.0:
+                                        if psi <= 1.4:
+                                            next.agent_mode = CraftMode.Weak_left
+                                            next.timer = 0
+                                        if psi > 1.4:
+                                            next.agent_mode = CraftMode.Coc
+                                            next.timer = 0
+                                if theta > -1.4:
+                                    if theta <= 0.7:
+                                        if vInt <= 733.33:
+                                            next.agent_mode = CraftMode.Weak_left
+                                            next.timer = 0
+                                        if vInt > 733.33:
+                                            next.agent_mode = CraftMode.Weak_left
+                                            next.timer = 0
+                                    if theta > 0.7:
+                                        if psi <= 0.0:
+                                            if psi <= -2.09:
+                                                next.agent_mode = CraftMode.Coc
+                                                next.timer = 0
+                                            if psi > -2.09:
+                                                next.agent_mode = CraftMode.Weak_left
+                                                next.timer = 0
+                                        if psi > 0.0:
+                                            next.agent_mode = CraftMode.Coc
+                                            next.timer = 0
+                        if psi > 2.79:
+                            next.agent_mode = CraftMode.Coc
+                            next.timer = 0
+                if theta > 2.79:
+                    next.agent_mode = CraftMode.Coc
+                    next.timer = 0
+def predict_3(rho, theta, psi, vOwn, vInt):
+    if vInt <= 66.67:
+        if rho <= 7333.1:
+            if theta <= 0.0:
+                next.agent_mode = CraftMode.Strong_left
+                next.timer = 0
+            if theta > 0.0:
+                if theta <= 0.7:
+                    next.agent_mode = CraftMode.Strong_right
+                    next.timer = 0
+                if theta > 0.7:
+                    if rho <= 1047.59:
+                        next.agent_mode = CraftMode.Strong_left
+                        next.timer = 0
+                    if rho > 1047.59:
+                        next.agent_mode = CraftMode.Weak_left
+                        next.timer = 0
+        if rho > 7333.1:
+            if rho <= 11523.45:
+                if vOwn <= 894.44:
+                    if theta <= 0.0:
+                        next.agent_mode = CraftMode.Strong_left
+                        next.timer = 0
+                    if theta > 0.0:
+                        next.agent_mode = CraftMode.Weak_right
+                        next.timer = 0
+                if vOwn > 894.44:
+                    next.agent_mode = CraftMode.Strong_right
+                    next.timer = 0
+            if rho > 11523.45:
+                if rho <= 15713.79:
+                    next.agent_mode = CraftMode.Coc
+                    next.timer = 0
+                if rho > 15713.79:
+                    next.agent_mode = CraftMode.Coc
+                    next.timer = 0
+    if vInt > 66.67:
+        if rho <= 17808.96:
+            if rho <= 3142.76:
+                if rho <= 1047.59:
+                    if psi <= 0.0:
+                        next.agent_mode = CraftMode.Strong_left
+                        next.timer = 0
+                    if psi > 0.0:
+                        if psi <= 0.7:
+                            next.agent_mode = CraftMode.Strong_right
+                            next.timer = 0
+                        if psi > 0.7:
+                            next.agent_mode = CraftMode.Strong_left
+                            next.timer = 0
+                if rho > 1047.59:
+                    if psi <= -0.7:
+                        next.agent_mode = CraftMode.Strong_left
+                        next.timer = 0
+                    if psi > -0.7:
+                        if psi <= 1.4:
+                            next.agent_mode = CraftMode.Strong_right
+                            next.timer = 0
+                        if psi > 1.4:
+                            next.agent_mode = CraftMode.Strong_left
+                            next.timer = 0
+            if rho > 3142.76:
+                if theta <= 0.7:
+                    if theta <= -0.7:
+                        if psi <= 0.0:
+                            if rho <= 5237.93:
+                                next.agent_mode = CraftMode.Weak_left
+                                next.timer = 0
+                            if rho > 5237.93:
+                                next.agent_mode = CraftMode.Coc
+                                next.timer = 0
+                        if psi > 0.0:
+                            next.agent_mode = CraftMode.Weak_left
+                            next.timer = 0
+                    if theta > -0.7:
+                        if theta <= 0.0:
+                            if psi <= 0.7:
+                                next.agent_mode = CraftMode.Strong_left
+                                next.timer = 0
+                            if psi > 0.7:
+                                if psi <= 2.79:
+                                    next.agent_mode = CraftMode.Strong_right
+                                    next.timer = 0
+                                if psi > 2.79:
+                                    next.agent_mode = CraftMode.Strong_left
+                                    next.timer = 0
+                        if theta > 0.0:
+                            if vInt <= 600.0:
+                                next.agent_mode = CraftMode.Strong_right
+                                next.timer = 0
+                            if vInt > 600.0:
+                                next.agent_mode = CraftMode.Strong_right
+                                next.timer = 0
+                if theta > 0.7:
+                    if rho <= 7333.1:
+                        if psi <= -2.09:
+                            next.agent_mode = CraftMode.Weak_left
+                            next.timer = 0
+                        if psi > -2.09:
+                            if psi <= 0.7:
+                                next.agent_mode = CraftMode.Strong_right
+                                next.timer = 0
+                            if psi > 0.7:
+                                next.agent_mode = CraftMode.Weak_left
+                                next.timer = 0
+                    if rho > 7333.1:
+                        if vInt <= 733.33:
+                            if rho <= 11523.45:
+                                if theta <= 2.09:
+                                    if psi <= -1.4:
+                                        next.agent_mode = CraftMode.Strong_right
+                                        next.timer = 0
+                                    if psi > -1.4:
+                                        next.agent_mode = CraftMode.Weak_right
+                                        next.timer = 0
+                                if theta > 2.09:
+                                    next.agent_mode = CraftMode.Coc
+                                    next.timer = 0
+                            if rho > 11523.45:
+                                next.agent_mode = CraftMode.Coc
+                                next.timer = 0
+                        if vInt > 733.33:
+                            if psi <= 0.0:
+                                next.agent_mode = CraftMode.Strong_right
+                                next.timer = 0
+                            if psi > 0.0:
+                                next.agent_mode = CraftMode.Coc
+                                next.timer = 0
+        if rho > 17808.96:
+            if theta <= -2.79:
+                next.agent_mode = CraftMode.Coc
+                next.timer = 0
+            if theta > -2.79:
+                if theta <= 2.79:
+                    if psi <= -2.79:
+                        next.agent_mode = CraftMode.Coc
+                        next.timer = 0
+                    if psi > -2.79:
+                        if psi <= 2.79:
+                            if rho <= 28284.83:
+                                next.agent_mode = CraftMode.Weak_left
+                                next.timer = 0
+                            if rho > 28284.83:
+                                if theta <= -1.4:
+                                    if psi <= 0.0:
+                                        next.agent_mode = CraftMode.Coc
+                                        next.timer = 0
+                                    if psi > 0.0:
+                                        if psi <= 1.4:
+                                            next.agent_mode = CraftMode.Weak_left
+                                            next.timer = 0
+                                        if psi > 1.4:
+                                            next.agent_mode = CraftMode.Coc
+                                            next.timer = 0
+                                if theta > -1.4:
+                                    if theta <= 0.7:
+                                        if vInt <= 733.33:
+                                            next.agent_mode = CraftMode.Weak_left
+                                            next.timer = 0
+                                        if vInt > 733.33:
+                                            next.agent_mode = CraftMode.Weak_left
+                                            next.timer = 0
+                                    if theta > 0.7:
+                                        if psi <= 0.0:
+                                            if psi <= -2.09:
+                                                next.agent_mode = CraftMode.Coc
+                                                next.timer = 0
+                                            if psi > -2.09:
+                                                next.agent_mode = CraftMode.Weak_left
+                                                next.timer = 0
+                                        if psi > 0.0:
+                                            next.agent_mode = CraftMode.Coc
+                                            next.timer = 0
+                        if psi > 2.79:
+                            next.agent_mode = CraftMode.Coc
+                            next.timer = 0
+                if theta > 2.79:
+                    next.agent_mode = CraftMode.Coc
+                    next.timer = 0
+def predict_3(rho, theta, psi, vOwn, vInt):
+    if vInt <= 66.67:
+        if rho <= 7333.1:
+            if theta <= 0.0:
+                next.agent_mode = CraftMode.Strong_left
+                next.timer = 0
+            if theta > 0.0:
+                if theta <= 0.7:
+                    next.agent_mode = CraftMode.Strong_right
+                    next.timer = 0
+                if theta > 0.7:
+                    if rho <= 1047.59:
+                        next.agent_mode = CraftMode.Strong_left
+                        next.timer = 0
+                    if rho > 1047.59:
+                        next.agent_mode = CraftMode.Weak_left
+                        next.timer = 0
+        if rho > 7333.1:
+            if rho <= 11523.45:
+                if vOwn <= 894.44:
+                    if theta <= 0.0:
+                        next.agent_mode = CraftMode.Strong_left
+                        next.timer = 0
+                    if theta > 0.0:
+                        next.agent_mode = CraftMode.Weak_right
+                        next.timer = 0
+                if vOwn > 894.44:
+                    next.agent_mode = CraftMode.Strong_right
+                    next.timer = 0
+            if rho > 11523.45:
+                if rho <= 15713.79:
+                    next.agent_mode = CraftMode.Coc
+                    next.timer = 0
+                if rho > 15713.79:
+                    next.agent_mode = CraftMode.Coc
+                    next.timer = 0
+    if vInt > 66.67:
+        if rho <= 17808.96:
+            if rho <= 3142.76:
+                if rho <= 1047.59:
+                    if psi <= 0.0:
+                        next.agent_mode = CraftMode.Strong_left
+                        next.timer = 0
+                    if psi > 0.0:
+                        if psi <= 0.7:
+                            next.agent_mode = CraftMode.Strong_right
+                            next.timer = 0
+                        if psi > 0.7:
+                            next.agent_mode = CraftMode.Strong_left
+                            next.timer = 0
+                if rho > 1047.59:
+                    if psi <= -0.7:
+                        next.agent_mode = CraftMode.Strong_left
+                        next.timer = 0
+                    if psi > -0.7:
+                        if psi <= 1.4:
+                            next.agent_mode = CraftMode.Strong_right
+                            next.timer = 0
+                        if psi > 1.4:
+                            next.agent_mode = CraftMode.Strong_left
+                            next.timer = 0
+            if rho > 3142.76:
+                if theta <= 0.7:
+                    if theta <= -0.7:
+                        if psi <= 0.0:
+                            if rho <= 5237.93:
+                                next.agent_mode = CraftMode.Weak_left
+                                next.timer = 0
+                            if rho > 5237.93:
+                                next.agent_mode = CraftMode.Coc
+                                next.timer = 0
+                        if psi > 0.0:
+                            next.agent_mode = CraftMode.Weak_left
+                            next.timer = 0
+                    if theta > -0.7:
+                        if theta <= 0.0:
+                            if psi <= 0.7:
+                                next.agent_mode = CraftMode.Strong_left
+                                next.timer = 0
+                            if psi > 0.7:
+                                if psi <= 2.79:
+                                    next.agent_mode = CraftMode.Strong_right
+                                    next.timer = 0
+                                if psi > 2.79:
+                                    next.agent_mode = CraftMode.Strong_left
+                                    next.timer = 0
+                        if theta > 0.0:
+                            if vInt <= 600.0:
+                                next.agent_mode = CraftMode.Strong_right
+                                next.timer = 0
+                            if vInt > 600.0:
+                                next.agent_mode = CraftMode.Strong_right
+                                next.timer = 0
+                if theta > 0.7:
+                    if rho <= 7333.1:
+                        if psi <= -2.09:
+                            next.agent_mode = CraftMode.Weak_left
+                            next.timer = 0
+                        if psi > -2.09:
+                            if psi <= 0.7:
+                                next.agent_mode = CraftMode.Strong_right
+                                next.timer = 0
+                            if psi > 0.7:
+                                next.agent_mode = CraftMode.Weak_left
+                                next.timer = 0
+                    if rho > 7333.1:
+                        if vInt <= 733.33:
+                            if rho <= 11523.45:
+                                if theta <= 2.09:
+                                    if psi <= -1.4:
+                                        next.agent_mode = CraftMode.Strong_right
+                                        next.timer = 0
+                                    if psi > -1.4:
+                                        next.agent_mode = CraftMode.Weak_right
+                                        next.timer = 0
+                                if theta > 2.09:
+                                    next.agent_mode = CraftMode.Coc
+                                    next.timer = 0
+                            if rho > 11523.45:
+                                next.agent_mode = CraftMode.Coc
+                                next.timer = 0
+                        if vInt > 733.33:
+                            if psi <= 0.0:
+                                next.agent_mode = CraftMode.Strong_right
+                                next.timer = 0
+                            if psi > 0.0:
+                                next.agent_mode = CraftMode.Coc
+                                next.timer = 0
+        if rho > 17808.96:
+            if theta <= -2.79:
+                next.agent_mode = CraftMode.Coc
+                next.timer = 0
+            if theta > -2.79:
+                if theta <= 2.79:
+                    if psi <= -2.79:
+                        next.agent_mode = CraftMode.Coc
+                        next.timer = 0
+                    if psi > -2.79:
+                        if psi <= 2.79:
+                            if rho <= 28284.83:
+                                next.agent_mode = CraftMode.Weak_left
+                                next.timer = 0
+                            if rho > 28284.83:
+                                if theta <= -1.4:
+                                    if psi <= 0.0:
+                                        next.agent_mode = CraftMode.Coc
+                                        next.timer = 0
+                                    if psi > 0.0:
+                                        if psi <= 1.4:
+                                            next.agent_mode = CraftMode.Weak_left
+                                            next.timer = 0
+                                        if psi > 1.4:
+                                            next.agent_mode = CraftMode.Coc
+                                            next.timer = 0
+                                if theta > -1.4:
+                                    if theta <= 0.7:
+                                        if vInt <= 733.33:
+                                            next.agent_mode = CraftMode.Weak_left
+                                            next.timer = 0
+                                        if vInt > 733.33:
+                                            next.agent_mode = CraftMode.Weak_left
+                                            next.timer = 0
+                                    if theta > 0.7:
+                                        if psi <= 0.0:
+                                            if psi <= -2.09:
+                                                next.agent_mode = CraftMode.Coc
+                                                next.timer = 0
+                                            if psi > -2.09:
+                                                next.agent_mode = CraftMode.Weak_left
+                                                next.timer = 0
+                                        if psi > 0.0:
+                                            next.agent_mode = CraftMode.Coc
+                                            next.timer = 0
+                        if psi > 2.79:
+                            next.agent_mode = CraftMode.Coc
+                            next.timer = 0
+                if theta > 2.79:
+                    next.agent_mode = CraftMode.Coc
+                    next.timer = 0
+def predict_3(rho, theta, psi, vOwn, vInt):
+    if vInt <= 66.67:
+        if rho <= 7333.1:
+            if theta <= 0.0:
+                next.agent_mode = CraftMode.Strong_left
+                next.timer = 0
+            if theta > 0.0:
+                if theta <= 0.7:
+                    next.agent_mode = CraftMode.Strong_right
+                    next.timer = 0
+                if theta > 0.7:
+                    if rho <= 1047.59:
+                        next.agent_mode = CraftMode.Strong_left
+                        next.timer = 0
+                    if rho > 1047.59:
+                        next.agent_mode = CraftMode.Weak_left
+                        next.timer = 0
+        if rho > 7333.1:
+            if rho <= 11523.45:
+                if vOwn <= 894.44:
+                    if theta <= 0.0:
+                        next.agent_mode = CraftMode.Strong_left
+                        next.timer = 0
+                    if theta > 0.0:
+                        next.agent_mode = CraftMode.Weak_right
+                        next.timer = 0
+                if vOwn > 894.44:
+                    next.agent_mode = CraftMode.Strong_right
+                    next.timer = 0
+            if rho > 11523.45:
+                if rho <= 15713.79:
+                    next.agent_mode = CraftMode.Coc
+                    next.timer = 0
+                if rho > 15713.79:
+                    next.agent_mode = CraftMode.Coc
+                    next.timer = 0
+    if vInt > 66.67:
+        if rho <= 17808.96:
+            if rho <= 3142.76:
+                if rho <= 1047.59:
+                    if psi <= 0.0:
+                        next.agent_mode = CraftMode.Strong_left
+                        next.timer = 0
+                    if psi > 0.0:
+                        if psi <= 0.7:
+                            next.agent_mode = CraftMode.Strong_right
+                            next.timer = 0
+                        if psi > 0.7:
+                            next.agent_mode = CraftMode.Strong_left
+                            next.timer = 0
+                if rho > 1047.59:
+                    if psi <= -0.7:
+                        next.agent_mode = CraftMode.Strong_left
+                        next.timer = 0
+                    if psi > -0.7:
+                        if psi <= 1.4:
+                            next.agent_mode = CraftMode.Strong_right
+                            next.timer = 0
+                        if psi > 1.4:
+                            next.agent_mode = CraftMode.Strong_left
+                            next.timer = 0
+            if rho > 3142.76:
+                if theta <= 0.7:
+                    if theta <= -0.7:
+                        if psi <= 0.0:
+                            if rho <= 5237.93:
+                                next.agent_mode = CraftMode.Weak_left
+                                next.timer = 0
+                            if rho > 5237.93:
+                                next.agent_mode = CraftMode.Coc
+                                next.timer = 0
+                        if psi > 0.0:
+                            next.agent_mode = CraftMode.Weak_left
+                            next.timer = 0
+                    if theta > -0.7:
+                        if theta <= 0.0:
+                            if psi <= 0.7:
+                                next.agent_mode = CraftMode.Strong_left
+                                next.timer = 0
+                            if psi > 0.7:
+                                if psi <= 2.79:
+                                    next.agent_mode = CraftMode.Strong_right
+                                    next.timer = 0
+                                if psi > 2.79:
+                                    next.agent_mode = CraftMode.Strong_left
+                                    next.timer = 0
+                        if theta > 0.0:
+                            if vInt <= 600.0:
+                                next.agent_mode = CraftMode.Strong_right
+                                next.timer = 0
+                            if vInt > 600.0:
+                                next.agent_mode = CraftMode.Strong_right
+                                next.timer = 0
+                if theta > 0.7:
+                    if rho <= 7333.1:
+                        if psi <= -2.09:
+                            next.agent_mode = CraftMode.Weak_left
+                            next.timer = 0
+                        if psi > -2.09:
+                            if psi <= 0.7:
+                                next.agent_mode = CraftMode.Strong_right
+                                next.timer = 0
+                            if psi > 0.7:
+                                next.agent_mode = CraftMode.Weak_left
+                                next.timer = 0
+                    if rho > 7333.1:
+                        if vInt <= 733.33:
+                            if rho <= 11523.45:
+                                if theta <= 2.09:
+                                    if psi <= -1.4:
+                                        next.agent_mode = CraftMode.Strong_right
+                                        next.timer = 0
+                                    if psi > -1.4:
+                                        next.agent_mode = CraftMode.Weak_right
+                                        next.timer = 0
+                                if theta > 2.09:
+                                    next.agent_mode = CraftMode.Coc
+                                    next.timer = 0
+                            if rho > 11523.45:
+                                next.agent_mode = CraftMode.Coc
+                                next.timer = 0
+                        if vInt > 733.33:
+                            if psi <= 0.0:
+                                next.agent_mode = CraftMode.Strong_right
+                                next.timer = 0
+                            if psi > 0.0:
+                                next.agent_mode = CraftMode.Coc
+                                next.timer = 0
+        if rho > 17808.96:
+            if theta <= -2.79:
+                next.agent_mode = CraftMode.Coc
+                next.timer = 0
+            if theta > -2.79:
+                if theta <= 2.79:
+                    if psi <= -2.79:
+                        next.agent_mode = CraftMode.Coc
+                        next.timer = 0
+                    if psi > -2.79:
+                        if psi <= 2.79:
+                            if rho <= 28284.83:
+                                next.agent_mode = CraftMode.Weak_left
+                                next.timer = 0
+                            if rho > 28284.83:
+                                if theta <= -1.4:
+                                    if psi <= 0.0:
+                                        next.agent_mode = CraftMode.Coc
+                                        next.timer = 0
+                                    if psi > 0.0:
+                                        if psi <= 1.4:
+                                            next.agent_mode = CraftMode.Weak_left
+                                            next.timer = 0
+                                        if psi > 1.4:
+                                            next.agent_mode = CraftMode.Coc
+                                            next.timer = 0
+                                if theta > -1.4:
+                                    if theta <= 0.7:
+                                        if vInt <= 733.33:
+                                            next.agent_mode = CraftMode.Weak_left
+                                            next.timer = 0
+                                        if vInt > 733.33:
+                                            next.agent_mode = CraftMode.Weak_left
+                                            next.timer = 0
+                                    if theta > 0.7:
+                                        if psi <= 0.0:
+                                            if psi <= -2.09:
+                                                next.agent_mode = CraftMode.Coc
+                                                next.timer = 0
+                                            if psi > -2.09:
+                                                next.agent_mode = CraftMode.Weak_left
+                                                next.timer = 0
+                                        if psi > 0.0:
+                                            next.agent_mode = CraftMode.Coc
+                                            next.timer = 0
+                        if psi > 2.79:
+                            next.agent_mode = CraftMode.Coc
+                            next.timer = 0
+                if theta > 2.79:
+                    next.agent_mode = CraftMode.Coc
+                    next.timer = 0
+def predict_3(rho, theta, psi, vOwn, vInt):
+    if vInt <= 66.67:
+        if rho <= 7333.1:
+            if theta <= 0.0:
+                next.agent_mode = CraftMode.Strong_left
+                next.timer = 0
+            if theta > 0.0:
+                if theta <= 0.7:
+                    next.agent_mode = CraftMode.Strong_right
+                    next.timer = 0
+                if theta > 0.7:
+                    if rho <= 1047.59:
+                        next.agent_mode = CraftMode.Strong_left
+                        next.timer = 0
+                    if rho > 1047.59:
+                        next.agent_mode = CraftMode.Weak_left
+                        next.timer = 0
+        if rho > 7333.1:
+            if rho <= 11523.45:
+                if vOwn <= 894.44:
+                    if theta <= 0.0:
+                        next.agent_mode = CraftMode.Strong_left
+                        next.timer = 0
+                    if theta > 0.0:
+                        next.agent_mode = CraftMode.Weak_right
+                        next.timer = 0
+                if vOwn > 894.44:
+                    next.agent_mode = CraftMode.Strong_right
+                    next.timer = 0
+            if rho > 11523.45:
+                if rho <= 15713.79:
+                    next.agent_mode = CraftMode.Coc
+                    next.timer = 0
+                if rho > 15713.79:
+                    next.agent_mode = CraftMode.Coc
+                    next.timer = 0
+    if vInt > 66.67:
+        if rho <= 17808.96:
+            if rho <= 3142.76:
+                if rho <= 1047.59:
+                    if psi <= 0.0:
+                        next.agent_mode = CraftMode.Strong_left
+                        next.timer = 0
+                    if psi > 0.0:
+                        if psi <= 0.7:
+                            next.agent_mode = CraftMode.Strong_right
+                            next.timer = 0
+                        if psi > 0.7:
+                            next.agent_mode = CraftMode.Strong_left
+                            next.timer = 0
+                if rho > 1047.59:
+                    if psi <= -0.7:
+                        next.agent_mode = CraftMode.Strong_left
+                        next.timer = 0
+                    if psi > -0.7:
+                        if psi <= 1.4:
+                            next.agent_mode = CraftMode.Strong_right
+                            next.timer = 0
+                        if psi > 1.4:
+                            next.agent_mode = CraftMode.Strong_left
+                            next.timer = 0
+            if rho > 3142.76:
+                if theta <= 0.7:
+                    if theta <= -0.7:
+                        if psi <= 0.0:
+                            if rho <= 5237.93:
+                                next.agent_mode = CraftMode.Weak_left
+                                next.timer = 0
+                            if rho > 5237.93:
+                                next.agent_mode = CraftMode.Coc
+                                next.timer = 0
+                        if psi > 0.0:
+                            next.agent_mode = CraftMode.Weak_left
+                            next.timer = 0
+                    if theta > -0.7:
+                        if theta <= 0.0:
+                            if psi <= 0.7:
+                                next.agent_mode = CraftMode.Strong_left
+                                next.timer = 0
+                            if psi > 0.7:
+                                if psi <= 2.79:
+                                    next.agent_mode = CraftMode.Strong_right
+                                    next.timer = 0
+                                if psi > 2.79:
+                                    next.agent_mode = CraftMode.Strong_left
+                                    next.timer = 0
+                        if theta > 0.0:
+                            if vInt <= 600.0:
+                                next.agent_mode = CraftMode.Strong_right
+                                next.timer = 0
+                            if vInt > 600.0:
+                                next.agent_mode = CraftMode.Strong_right
+                                next.timer = 0
+                if theta > 0.7:
+                    if rho <= 7333.1:
+                        if psi <= -2.09:
+                            next.agent_mode = CraftMode.Weak_left
+                            next.timer = 0
+                        if psi > -2.09:
+                            if psi <= 0.7:
+                                next.agent_mode = CraftMode.Strong_right
+                                next.timer = 0
+                            if psi > 0.7:
+                                next.agent_mode = CraftMode.Weak_left
+                                next.timer = 0
+                    if rho > 7333.1:
+                        if vInt <= 733.33:
+                            if rho <= 11523.45:
+                                if theta <= 2.09:
+                                    if psi <= -1.4:
+                                        next.agent_mode = CraftMode.Strong_right
+                                        next.timer = 0
+                                    if psi > -1.4:
+                                        next.agent_mode = CraftMode.Weak_right
+                                        next.timer = 0
+                                if theta > 2.09:
+                                    next.agent_mode = CraftMode.Coc
+                                    next.timer = 0
+                            if rho > 11523.45:
+                                next.agent_mode = CraftMode.Coc
+                                next.timer = 0
+                        if vInt > 733.33:
+                            if psi <= 0.0:
+                                next.agent_mode = CraftMode.Strong_right
+                                next.timer = 0
+                            if psi > 0.0:
+                                next.agent_mode = CraftMode.Coc
+                                next.timer = 0
+        if rho > 17808.96:
+            if theta <= -2.79:
+                next.agent_mode = CraftMode.Coc
+                next.timer = 0
+            if theta > -2.79:
+                if theta <= 2.79:
+                    if psi <= -2.79:
+                        next.agent_mode = CraftMode.Coc
+                        next.timer = 0
+                    if psi > -2.79:
+                        if psi <= 2.79:
+                            if rho <= 28284.83:
+                                next.agent_mode = CraftMode.Weak_left
+                                next.timer = 0
+                            if rho > 28284.83:
+                                if theta <= -1.4:
+                                    if psi <= 0.0:
+                                        next.agent_mode = CraftMode.Coc
+                                        next.timer = 0
+                                    if psi > 0.0:
+                                        if psi <= 1.4:
+                                            next.agent_mode = CraftMode.Weak_left
+                                            next.timer = 0
+                                        if psi > 1.4:
+                                            next.agent_mode = CraftMode.Coc
+                                            next.timer = 0
+                                if theta > -1.4:
+                                    if theta <= 0.7:
+                                        if vInt <= 733.33:
+                                            next.agent_mode = CraftMode.Weak_left
+                                            next.timer = 0
+                                        if vInt > 733.33:
+                                            next.agent_mode = CraftMode.Weak_left
+                                            next.timer = 0
+                                    if theta > 0.7:
+                                        if psi <= 0.0:
+                                            if psi <= -2.09:
+                                                next.agent_mode = CraftMode.Coc
+                                                next.timer = 0
+                                            if psi > -2.09:
+                                                next.agent_mode = CraftMode.Weak_left
+                                                next.timer = 0
+                                        if psi > 0.0:
+                                            next.agent_mode = CraftMode.Coc
+                                            next.timer = 0
+                        if psi > 2.79:
+                            next.agent_mode = CraftMode.Coc
+                            next.timer = 0
+                if theta > 2.79:
+                    next.agent_mode = CraftMode.Coc
+                    next.timer = 0
+def predict_3(rho, theta, psi, vOwn, vInt):
+    if vInt <= 66.67:
+        if rho <= 7333.1:
+            if theta <= 0.0:
+                next.agent_mode = CraftMode.Strong_left
+                next.timer = 0
+            if theta > 0.0:
+                if theta <= 0.7:
+                    next.agent_mode = CraftMode.Strong_right
+                    next.timer = 0
+                if theta > 0.7:
+                    if rho <= 1047.59:
+                        next.agent_mode = CraftMode.Strong_left
+                        next.timer = 0
+                    if rho > 1047.59:
+                        next.agent_mode = CraftMode.Weak_left
+                        next.timer = 0
+        if rho > 7333.1:
+            if rho <= 11523.45:
+                if vOwn <= 894.44:
+                    if theta <= 0.0:
+                        next.agent_mode = CraftMode.Strong_left
+                        next.timer = 0
+                    if theta > 0.0:
+                        next.agent_mode = CraftMode.Weak_right
+                        next.timer = 0
+                if vOwn > 894.44:
+                    next.agent_mode = CraftMode.Strong_right
+                    next.timer = 0
+            if rho > 11523.45:
+                if rho <= 15713.79:
+                    next.agent_mode = CraftMode.Coc
+                    next.timer = 0
+                if rho > 15713.79:
+                    next.agent_mode = CraftMode.Coc
+                    next.timer = 0
+    if vInt > 66.67:
+        if rho <= 17808.96:
+            if rho <= 3142.76:
+                if rho <= 1047.59:
+                    if psi <= 0.0:
+                        next.agent_mode = CraftMode.Strong_left
+                        next.timer = 0
+                    if psi > 0.0:
+                        if psi <= 0.7:
+                            next.agent_mode = CraftMode.Strong_right
+                            next.timer = 0
+                        if psi > 0.7:
+                            next.agent_mode = CraftMode.Strong_left
+                            next.timer = 0
+                if rho > 1047.59:
+                    if psi <= -0.7:
+                        next.agent_mode = CraftMode.Strong_left
+                        next.timer = 0
+                    if psi > -0.7:
+                        if psi <= 1.4:
+                            next.agent_mode = CraftMode.Strong_right
+                            next.timer = 0
+                        if psi > 1.4:
+                            next.agent_mode = CraftMode.Strong_left
+                            next.timer = 0
+            if rho > 3142.76:
+                if theta <= 0.7:
+                    if theta <= -0.7:
+                        if psi <= 0.0:
+                            if rho <= 5237.93:
+                                next.agent_mode = CraftMode.Weak_left
+                                next.timer = 0
+                            if rho > 5237.93:
+                                next.agent_mode = CraftMode.Coc
+                                next.timer = 0
+                        if psi > 0.0:
+                            next.agent_mode = CraftMode.Weak_left
+                            next.timer = 0
+                    if theta > -0.7:
+                        if theta <= 0.0:
+                            if psi <= 0.7:
+                                next.agent_mode = CraftMode.Strong_left
+                                next.timer = 0
+                            if psi > 0.7:
+                                if psi <= 2.79:
+                                    next.agent_mode = CraftMode.Strong_right
+                                    next.timer = 0
+                                if psi > 2.79:
+                                    next.agent_mode = CraftMode.Strong_left
+                                    next.timer = 0
+                        if theta > 0.0:
+                            if vInt <= 600.0:
+                                next.agent_mode = CraftMode.Strong_right
+                                next.timer = 0
+                            if vInt > 600.0:
+                                next.agent_mode = CraftMode.Strong_right
+                                next.timer = 0
+                if theta > 0.7:
+                    if rho <= 7333.1:
+                        if psi <= -2.09:
+                            next.agent_mode = CraftMode.Weak_left
+                            next.timer = 0
+                        if psi > -2.09:
+                            if psi <= 0.7:
+                                next.agent_mode = CraftMode.Strong_right
+                                next.timer = 0
+                            if psi > 0.7:
+                                next.agent_mode = CraftMode.Weak_left
+                                next.timer = 0
+                    if rho > 7333.1:
+                        if vInt <= 733.33:
+                            if rho <= 11523.45:
+                                if theta <= 2.09:
+                                    if psi <= -1.4:
+                                        next.agent_mode = CraftMode.Strong_right
+                                        next.timer = 0
+                                    if psi > -1.4:
+                                        next.agent_mode = CraftMode.Weak_right
+                                        next.timer = 0
+                                if theta > 2.09:
+                                    next.agent_mode = CraftMode.Coc
+                                    next.timer = 0
+                            if rho > 11523.45:
+                                next.agent_mode = CraftMode.Coc
+                                next.timer = 0
+                        if vInt > 733.33:
+                            if psi <= 0.0:
+                                next.agent_mode = CraftMode.Strong_right
+                                next.timer = 0
+                            if psi > 0.0:
+                                next.agent_mode = CraftMode.Coc
+                                next.timer = 0
+        if rho > 17808.96:
+            if theta <= -2.79:
+                next.agent_mode = CraftMode.Coc
+                next.timer = 0
+            if theta > -2.79:
+                if theta <= 2.79:
+                    if psi <= -2.79:
+                        next.agent_mode = CraftMode.Coc
+                        next.timer = 0
+                    if psi > -2.79:
+                        if psi <= 2.79:
+                            if rho <= 28284.83:
+                                next.agent_mode = CraftMode.Weak_left
+                                next.timer = 0
+                            if rho > 28284.83:
+                                if theta <= -1.4:
+                                    if psi <= 0.0:
+                                        next.agent_mode = CraftMode.Coc
+                                        next.timer = 0
+                                    if psi > 0.0:
+                                        if psi <= 1.4:
+                                            next.agent_mode = CraftMode.Weak_left
+                                            next.timer = 0
+                                        if psi > 1.4:
+                                            next.agent_mode = CraftMode.Coc
+                                            next.timer = 0
+                                if theta > -1.4:
+                                    if theta <= 0.7:
+                                        if vInt <= 733.33:
+                                            next.agent_mode = CraftMode.Weak_left
+                                            next.timer = 0
+                                        if vInt > 733.33:
+                                            next.agent_mode = CraftMode.Weak_left
+                                            next.timer = 0
+                                    if theta > 0.7:
+                                        if psi <= 0.0:
+                                            if psi <= -2.09:
+                                                next.agent_mode = CraftMode.Coc
+                                                next.timer = 0
+                                            if psi > -2.09:
+                                                next.agent_mode = CraftMode.Weak_left
+                                                next.timer = 0
+                                        if psi > 0.0:
+                                            next.agent_mode = CraftMode.Coc
+                                            next.timer = 0
+                        if psi > 2.79:
+                            next.agent_mode = CraftMode.Coc
+                            next.timer = 0
+                if theta > 2.79:
+                    next.agent_mode = CraftMode.Coc
+                    next.timer = 0
+def predict_3(rho, theta, psi, vOwn, vInt):
+    if vInt <= 66.67:
+        if rho <= 7333.1:
+            if theta <= 0.0:
+                next.agent_mode = CraftMode.Strong_left
+                next.timer = 0
+            if theta > 0.0:
+                if theta <= 0.7:
+                    next.agent_mode = CraftMode.Strong_right
+                    next.timer = 0
+                if theta > 0.7:
+                    if rho <= 1047.59:
+                        next.agent_mode = CraftMode.Strong_left
+                        next.timer = 0
+                    if rho > 1047.59:
+                        next.agent_mode = CraftMode.Weak_left
+                        next.timer = 0
+        if rho > 7333.1:
+            if rho <= 11523.45:
+                if vOwn <= 894.44:
+                    if theta <= 0.0:
+                        next.agent_mode = CraftMode.Strong_left
+                        next.timer = 0
+                    if theta > 0.0:
+                        next.agent_mode = CraftMode.Weak_right
+                        next.timer = 0
+                if vOwn > 894.44:
+                    next.agent_mode = CraftMode.Strong_right
+                    next.timer = 0
+            if rho > 11523.45:
+                if rho <= 15713.79:
+                    next.agent_mode = CraftMode.Coc
+                    next.timer = 0
+                if rho > 15713.79:
+                    next.agent_mode = CraftMode.Coc
+                    next.timer = 0
+    if vInt > 66.67:
+        if rho <= 17808.96:
+            if rho <= 3142.76:
+                if rho <= 1047.59:
+                    if psi <= 0.0:
+                        next.agent_mode = CraftMode.Strong_left
+                        next.timer = 0
+                    if psi > 0.0:
+                        if psi <= 0.7:
+                            next.agent_mode = CraftMode.Strong_right
+                            next.timer = 0
+                        if psi > 0.7:
+                            next.agent_mode = CraftMode.Strong_left
+                            next.timer = 0
+                if rho > 1047.59:
+                    if psi <= -0.7:
+                        next.agent_mode = CraftMode.Strong_left
+                        next.timer = 0
+                    if psi > -0.7:
+                        if psi <= 1.4:
+                            next.agent_mode = CraftMode.Strong_right
+                            next.timer = 0
+                        if psi > 1.4:
+                            next.agent_mode = CraftMode.Strong_left
+                            next.timer = 0
+            if rho > 3142.76:
+                if theta <= 0.7:
+                    if theta <= -0.7:
+                        if psi <= 0.0:
+                            if rho <= 5237.93:
+                                next.agent_mode = CraftMode.Weak_left
+                                next.timer = 0
+                            if rho > 5237.93:
+                                next.agent_mode = CraftMode.Coc
+                                next.timer = 0
+                        if psi > 0.0:
+                            next.agent_mode = CraftMode.Weak_left
+                            next.timer = 0
+                    if theta > -0.7:
+                        if theta <= 0.0:
+                            if psi <= 0.7:
+                                next.agent_mode = CraftMode.Strong_left
+                                next.timer = 0
+                            if psi > 0.7:
+                                if psi <= 2.79:
+                                    next.agent_mode = CraftMode.Strong_right
+                                    next.timer = 0
+                                if psi > 2.79:
+                                    next.agent_mode = CraftMode.Strong_left
+                                    next.timer = 0
+                        if theta > 0.0:
+                            if vInt <= 600.0:
+                                next.agent_mode = CraftMode.Strong_right
+                                next.timer = 0
+                            if vInt > 600.0:
+                                next.agent_mode = CraftMode.Strong_right
+                                next.timer = 0
+                if theta > 0.7:
+                    if rho <= 7333.1:
+                        if psi <= -2.09:
+                            next.agent_mode = CraftMode.Weak_left
+                            next.timer = 0
+                        if psi > -2.09:
+                            if psi <= 0.7:
+                                next.agent_mode = CraftMode.Strong_right
+                                next.timer = 0
+                            if psi > 0.7:
+                                next.agent_mode = CraftMode.Weak_left
+                                next.timer = 0
+                    if rho > 7333.1:
+                        if vInt <= 733.33:
+                            if rho <= 11523.45:
+                                if theta <= 2.09:
+                                    if psi <= -1.4:
+                                        next.agent_mode = CraftMode.Strong_right
+                                        next.timer = 0
+                                    if psi > -1.4:
+                                        next.agent_mode = CraftMode.Weak_right
+                                        next.timer = 0
+                                if theta > 2.09:
+                                    next.agent_mode = CraftMode.Coc
+                                    next.timer = 0
+                            if rho > 11523.45:
+                                next.agent_mode = CraftMode.Coc
+                                next.timer = 0
+                        if vInt > 733.33:
+                            if psi <= 0.0:
+                                next.agent_mode = CraftMode.Strong_right
+                                next.timer = 0
+                            if psi > 0.0:
+                                next.agent_mode = CraftMode.Coc
+                                next.timer = 0
+        if rho > 17808.96:
+            if theta <= -2.79:
+                next.agent_mode = CraftMode.Coc
+                next.timer = 0
+            if theta > -2.79:
+                if theta <= 2.79:
+                    if psi <= -2.79:
+                        next.agent_mode = CraftMode.Coc
+                        next.timer = 0
+                    if psi > -2.79:
+                        if psi <= 2.79:
+                            if rho <= 28284.83:
+                                next.agent_mode = CraftMode.Weak_left
+                                next.timer = 0
+                            if rho > 28284.83:
+                                if theta <= -1.4:
+                                    if psi <= 0.0:
+                                        next.agent_mode = CraftMode.Coc
+                                        next.timer = 0
+                                    if psi > 0.0:
+                                        if psi <= 1.4:
+                                            next.agent_mode = CraftMode.Weak_left
+                                            next.timer = 0
+                                        if psi > 1.4:
+                                            next.agent_mode = CraftMode.Coc
+                                            next.timer = 0
+                                if theta > -1.4:
+                                    if theta <= 0.7:
+                                        if vInt <= 733.33:
+                                            next.agent_mode = CraftMode.Weak_left
+                                            next.timer = 0
+                                        if vInt > 733.33:
+                                            next.agent_mode = CraftMode.Weak_left
+                                            next.timer = 0
+                                    if theta > 0.7:
+                                        if psi <= 0.0:
+                                            if psi <= -2.09:
+                                                next.agent_mode = CraftMode.Coc
+                                                next.timer = 0
+                                            if psi > -2.09:
+                                                next.agent_mode = CraftMode.Weak_left
+                                                next.timer = 0
+                                        if psi > 0.0:
+                                            next.agent_mode = CraftMode.Coc
+                                            next.timer = 0
+                        if psi > 2.79:
+                            next.agent_mode = CraftMode.Coc
+                            next.timer = 0
+                if theta > 2.79:
+                    next.agent_mode = CraftMode.Coc
+                    next.timer = 0
