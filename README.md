@@ -10,9 +10,11 @@ pip3 install -r requirements.txt
 
 ## Running Original ACAS Xu
 
+To run the original ACAS Xu network simulation, as developed by Stanley Bak, run the `run_true_acas.py` script.
+
 ## Convert ACAS Xu to Decision Tree
 
-To create the decision tree representation of the ACAS Xu neural networks, run the `decision_tree_create.py` script.
+To create the decision tree representation of the ACAS Xu neural networks, run the `create_decision_tree.py` script.
 
 ## Running DT ACAS
 

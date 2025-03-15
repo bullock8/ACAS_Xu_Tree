@@ -40,7 +40,7 @@ def init_plot():
     #matplotlib.use('TkAgg') # set backend
 
     p = 'bak_matplotlib.mlpstyle'
-    plt.style.use(['bmh', p])
+    plt.style.use('ggplot')#(['bmh', p])
 
 def load_network(last_cmd):
     '''load the one neural network as a 2-tuple (range_for_scaling, means_for_scaling)'''
@@ -176,7 +176,7 @@ def state7_to_state8(state7, v_own, v_int):
 def get_airplane_img():
     """load airplane image form file"""
 
-    img = plt.imread('airplane.png')
+    img = plt.imread(f'ACAS_Xu_networks{os.sep}Ego.png')
 
     return img
 
