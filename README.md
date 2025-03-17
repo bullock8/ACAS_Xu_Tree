@@ -24,4 +24,6 @@ To run simulations which use the decision tree approximation of ACAS Xu, run the
 
 ## Plotting Utilities
 
-TODO:  Keep tree_compare.  tree_animate probably should be archived
+You can plot 2D representations of the decision tree and neural net command advisories, as seen below.  To create these figures, run `compare_ACAS_NN_DT.py`.
+![Tree Representation](https://github.com/bullock8/ACAS_Xu_Tree/blob/a6606ddc9f011152b77b2686507c1f891d2cfce9/archive/ACAS_Tree.png) ![NN Representation](https://github.com/bullock8/ACAS_Xu_Tree/blob/main/archive/ACAS_True.png)
+
