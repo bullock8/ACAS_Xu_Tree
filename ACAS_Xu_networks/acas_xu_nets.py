@@ -461,7 +461,7 @@ class State():
 
         self.vec = step_state(self.vec, self.v_own, self.v_int, time_elapse_mat, State.dt)
 
-    def simulate(self, cmd_list, tree_list):
+    def simulate(self, cmd_list):
         '''simulate system
 
         saves result in self.vec_list
@@ -470,7 +470,6 @@ class State():
 
         self.u_list = cmd_list
         self.u_list_index = None
-        self.tree_list = tree_list
 
         assert isinstance(cmd_list, list)
         tmax = len(cmd_list) * State.nn_update_rate
@@ -508,8 +507,116 @@ class State():
             assert not self.vec_list
             assert not self.commands
             assert not self.int_commands
+    
+    def step_tree(self):
+        'execute one time step and update the model'
+
+        tol = 1e-6
+
+        if self.next_nn_update < tol:
+            assert abs(self.next_nn_update) < tol, f"time step doesn't sync with nn update time. " + \
+                      f"next update: {self.next_nn_update}"
+
+            # update command
+            self.update_command_tree()
+
+            self.next_nn_update = State.nn_update_rate
+
+        self.next_nn_update -= State.dt
+        intruder_cmd = self.u_list[self.u_list_index]
+
+        if self.save_states:
+            self.commands.append(self.command)
+            self.int_commands.append(intruder_cmd)
+
+        time_elapse_mat = State.time_elapse_mats[self.command][intruder_cmd] #get_time_elapse_mat(self.command, State.dt, intruder_cmd)
+
+        self.vec = step_state(self.vec, self.v_own, self.v_int, time_elapse_mat, State.dt)
+        
+    def simulate_tree(self, cmd_list, tree_list):
+        '''simulate system
+
+        saves result in self.vec_list
+        also saves self.min_dist
+        '''
+
+        self.u_list = cmd_list
+        self.u_list_index = None
+        self.tree_list = tree_list
+
+        assert isinstance(cmd_list, list)
+        tmax = len(cmd_list) * State.nn_update_rate
+
+        t = 0.0
+
+        if self.save_states:
+            rv = [self.vec.copy()]
+
+        #self.min_dist = 0, math.sqrt((self.vec[0] - self.vec[3])**2 + (self.vec[1] - self.vec[4])**2), self.vec.copy()
+        prev_dist_sq = (self.vec[0] - self.vec[3])**2 + (self.vec[1] - self.vec[4])**2
+
+        while t + 1e-6 < tmax:
+            self.step_tree()
+
+            cur_dist_sq = (self.vec[0] - self.vec[3])**2 + (self.vec[1] - self.vec[4])**2
+
+            if self.save_states:
+                rv.append(self.vec.copy())
+
+            t += State.dt
+
+            if cur_dist_sq > prev_dist_sq:
+                #print(f"Distance was increasing at time {round(t, 2)}, stopping simulation. Min_dist: {round(prev_dist, 1)}ft")
+                break
+
+            prev_dist_sq = cur_dist_sq
+
+        self.min_dist = math.sqrt(prev_dist_sq)
+
+        if self.save_states:
+            self.vec_list = rv
+
+        if not self.save_states:
+            assert not self.vec_list
+            assert not self.commands
+            assert not self.int_commands
 
     def update_command(self):
+        'update command based on current state'''
+
+        rho, theta, psi, v_own, v_int = state7_to_state5(self.vec, self.v_own, self.v_int)
+
+        # 0: rho, distance
+        # 1: theta, angle to intruder relative to ownship heading
+        # 2: psi, heading of intruder relative to ownship heading
+        # 3: v_own, speed of ownship
+        # 4: v_int, speed in intruder
+
+        # min inputs: 0, -3.1415, -3.1415, 100, 0
+        # max inputs: 60760, 3.1415, 3,1415, 1200, 1200
+
+        if rho > 60760:
+            self.command = 0
+        else:
+            last_command = self.command
+
+            net = State.nets[last_command]
+            state = [rho, theta, psi, v_own, v_int]
+
+            res = run_network(net, state)
+            self.command = np.argmin(res)
+
+            #names = ['clear-of-conflict', 'weak-left', 'weak-right', 'strong-left', 'strong-right']
+
+        if self.u_list_index is None:
+            self.u_list_index = 0
+        else:
+            self.u_list_index += 1
+
+            # repeat last command if no more commands
+            self.u_list_index = min(self.u_list_index, len(self.u_list) - 1)
+            
+    def update_command_tree(self):
         'update command based on current state'''
         tree_list = self.tree_list
 
@@ -548,7 +655,7 @@ class State():
 
             # repeat last command if no more commands
             self.u_list_index = min(self.u_list_index, len(self.u_list) - 1)
-
+    
 def plot(s, save_mp4):
     """plot a specific simulation"""
 

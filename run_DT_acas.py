@@ -84,7 +84,7 @@ def main():
 
             # run the simulation
             s = State(init_vec, v_own, v_int, save_states=False)
-            s.simulate(cmd_list, tree_list)
+            s.simulate_tree(cmd_list, tree_list)
 
             # save most interesting state based on some criteria
             if interesting_state is None or s.min_dist < interesting_state.min_dist:
@@ -100,7 +100,7 @@ def main():
 
     init_vec, cmd_list, init_velo = make_random_input(interesting_seed, intruder_can_turn=intruder_can_turn)
     s = State(init_vec, init_velo[0], init_velo[1], save_states=True)
-    s.simulate(cmd_list, tree_list)
+    s.simulate_tree(cmd_list, tree_list)
 
     d = round(s.min_dist, 2)
     print(f"\nSeed {interesting_seed} has min_dist {d}ft")

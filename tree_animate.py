@@ -26,7 +26,7 @@ from sklearn.tree import _tree
 from tqdm import tqdm
 import pickle
 
-from acasxu_dubins_decision_tree import *
+from archive.acasxu_dubins_decision_tree import *
 
 #######
 # Load networks
@@ -223,6 +223,31 @@ ax.set_zlabel("rho")
 
 plt.show()
 
+'''
+
+'''
+#### Distance metric
+
+# check through all test points
+min_rho_dist = np.zeros([test_pts])
+min_theta_dist = np.zeros([test_pts])
+min_phi_dist = np.zeros([test_pts])
+min_vown_dist = np.zeros([test_pts])
+min_vint_dist = np.zeros([test_pts])
+
+
+for i in range(test_pts):
+    if net_cmds[i] != tree_cmds[i]:
+        # find distance to nearest correctly-classified point
+        incorrect_class = tree_cmds[i]
+        ix = np.where(net_cmds == incorrect_class)
+        min_rho_dist[i] = np.min(np.abs( test_states[i, 0] - test_states[ix, 0] ))
+        min_theta_dist[i] = np.min(np.abs( test_states[i, 1] - test_states[ix, 1] ))
+        min_phi_dist[i] = np.min(np.abs( test_states[i, 2] - test_states[ix, 2] ))
+        min_vown_dist[i] = np.min(np.abs( test_states[i, 3] - test_states[ix, 3] ))
+        min_vint_dist[i] = np.min(np.abs( test_states[i, 4] - test_states[ix, 4] ))
+
+print(np.max(min_vint_dist))
 '''
 
 

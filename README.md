@@ -18,7 +18,9 @@ To create the decision tree representation of the ACAS Xu neural networks, run t
 
 ## Running DT ACAS
 
-TODO:  Need to implement example on the dubin's plane example
+To run simulations which use the decision tree approximation of ACAS Xu, run the `run_DT_acas.py` script.
+
+**Note:** this script loads the decision trees from pickle files in `saved_trees/`.  You will need to run `create_decision_tree.py` script at least once to create the necessary trees for `run_DT_acas.py`.
 
 ## Plotting Utilities
 
