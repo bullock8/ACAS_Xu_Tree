@@ -23,7 +23,9 @@ def get_tree_cmd(prev_cmd, tree_list, state_vec):
     '''
     acas_tree = tree_list[prev_cmd]
     
-    turn_cmd = 1
+    state_npy = np.array(state_vec).reshape((1,5))
+    
+    turn_cmd = int(acas_tree.predict(state_npy))
     return turn_cmd
 
 
@@ -72,7 +74,7 @@ def main():
             if state5[0] > 60760:
                 command = 0 # rho exceeds network limit
             else:
-                prev_cmd = State.nets[0]
+                prev_cmd = 0#State.nets[0]
                 command = get_tree_cmd(prev_cmd, tree_list, state5)
                 #res = run_network(State.nets[0], state5)
                 #command = np.argmin(res)
@@ -82,7 +84,7 @@ def main():
 
             # run the simulation
             s = State(init_vec, v_own, v_int, save_states=False)
-            s.simulate(cmd_list)
+            s.simulate(cmd_list, tree_list)
 
             # save most interesting state based on some criteria
             if interesting_state is None or s.min_dist < interesting_state.min_dist:
@@ -98,7 +100,7 @@ def main():
 
     init_vec, cmd_list, init_velo = make_random_input(interesting_seed, intruder_can_turn=intruder_can_turn)
     s = State(init_vec, init_velo[0], init_velo[1], save_states=True)
-    s.simulate(cmd_list)
+    s.simulate(cmd_list, tree_list)
 
     d = round(s.min_dist, 2)
     print(f"\nSeed {interesting_seed} has min_dist {d}ft")

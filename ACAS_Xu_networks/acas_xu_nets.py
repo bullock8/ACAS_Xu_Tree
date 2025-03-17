@@ -461,7 +461,7 @@ class State():
 
         self.vec = step_state(self.vec, self.v_own, self.v_int, time_elapse_mat, State.dt)
 
-    def simulate(self, cmd_list):
+    def simulate(self, cmd_list, tree_list):
         '''simulate system
 
         saves result in self.vec_list
@@ -470,6 +470,7 @@ class State():
 
         self.u_list = cmd_list
         self.u_list_index = None
+        self.tree_list = tree_list
 
         assert isinstance(cmd_list, list)
         tmax = len(cmd_list) * State.nn_update_rate
@@ -510,6 +511,7 @@ class State():
 
     def update_command(self):
         'update command based on current state'''
+        tree_list = self.tree_list
 
         rho, theta, psi, v_own, v_int = state7_to_state5(self.vec, self.v_own, self.v_int)
 
@@ -527,12 +529,15 @@ class State():
         else:
             last_command = self.command
 
-            net = State.nets[last_command]
-
+            #net = State.nets[last_command]
+            tree = tree_list[last_command]
             state = [rho, theta, psi, v_own, v_int]
 
-            res = run_network(net, state)
-            self.command = np.argmin(res)
+            #res = run_network(net, state)
+            #self.command = np.argmin(res)
+            state_npy = np.array(state).reshape((1,5))
+            cmd = tree.predict(state_npy)
+            self.command = int(cmd[0])
 
             #names = ['clear-of-conflict', 'weak-left', 'weak-right', 'strong-left', 'strong-right']
 
