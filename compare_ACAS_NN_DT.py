@@ -164,7 +164,8 @@ def compare_net(net_ind, fixed_states):
 
     plt.show()
 
-
-fixed_states = [1000,100,100]
-compare_net(net_ind = 0, fixed_states=fixed_states)
+if __name__ == "__main__":
+    net_ind = 0
+    fixed_states = [1000,100,100]
+    compare_net(net_ind = net_ind, fixed_states=fixed_states)
 
